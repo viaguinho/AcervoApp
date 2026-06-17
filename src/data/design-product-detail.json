@@ -1,0 +1,567 @@
+{
+  "_meta": {
+    "description": "Design spec completo da página ProductDetail do app Acervo. Use este arquivo para replicar o layout, tipografia, cores e comportamento em um novo app.",
+    "stack": "React + Tailwind CSS + Framer Motion",
+    "fonts": ["Bodoni Moda (serif, italic — títulos/drop cap)", "Outfit (sans-serif — labels, preços, specs)", "Inter (sans-serif — corpo de texto)"]
+  },
+
+  "page": {
+    "background": "#F8F9FA",
+    "minHeight": "100vh",
+    "overflow": "y-auto x-hidden",
+    "fontFamily": "Inter",
+    "selectionBackground": "#FEF3C7"
+  },
+
+  "aurora_background": {
+    "description": "Gradiente animado dinâmico no topo da página, cor derivada do liquid color do produto",
+    "position": "absolute top-[-150px] left-0",
+    "size": "w-full h-[750px]",
+    "zIndex": 0,
+    "colors": {
+      "formula": "liquidColor com opacidades: 40%, 27%, 33%, 20%, 27%",
+      "example_whisky_amber": ["#D97706 66px", "#D97706 44px", "#D97706 55px", "#D97706 33px", "#D97706 44px"]
+    }
+  },
+
+  "navigation": {
+    "back_button": {
+      "position": "absolute top-[30px] left-[20px]",
+      "size": "w-[44px] h-[44px]",
+      "shape": "circle (borderRadius: 50%)",
+      "style": "Apple Tahoe Liquid Glass (backdrop-filter blur + inset shadows)",
+      "background": "rgba(255, 255, 255, 0.7)",
+      "icon": "chevron-left SVG 20x20 strokeWidth=1.5",
+      "zIndex": 100
+    },
+    "share_button": {
+      "position": "absolute top-[30px] right-[20px]",
+      "size": "w-11 h-11",
+      "style": "Glass — rgba(255,255,255,0.70) backdrop-blur-[10px] border-[rgba(0,0,0,0.06)]",
+      "icon": "Share2 (lucide) 18x18 strokeWidth=1.5",
+      "menu": {
+        "type": "FloatingActionMenu expandable vertical-left",
+        "options": ["WhatsApp (#25D366)", "E-mail (#111827)", "Copiar Link (#111827)"],
+        "option_style": "bg-[rgba(255,255,255,0.98)] backdrop-blur-xl border border-black/10 shadow-[0_12px_24px_-4px_rgba(0,0,0,0.15)] px-4 py-5 font-semibold"
+      }
+    }
+  },
+
+  "hero_section": {
+    "description": "Área da imagem da garrafa com categoria em tipografia gigante ao fundo",
+
+    "category_watermark": {
+      "description": "Nome da categoria como texto grandioso semitransparente atrás da garrafa",
+      "position": "absolute, centralizado horizontalmente (translateX -50%)",
+      "fontSize": "clamp(60px, dynamic-vw, 160px) — calculado por tamanho do texto",
+      "fontWeight": 900,
+      "textTransform": "uppercase",
+      "letterSpacing": "-0.06em",
+      "lineHeight": 1,
+      "whiteSpace": "nowrap",
+      "color": "gradient vertical do liquidColor com opacidades: 30% → 10% → transparent",
+      "gradient": "linear-gradient(180deg, {liquidColor}4D 0%, {liquidColor}1A 60%, transparent 100%)",
+      "backgroundClip": "text",
+      "filter": "drop-shadow(0 2px 4px rgba(0,0,0,0.05))",
+      "adminDraggable": true,
+      "fontSize_rules": {
+        "APERITIVO": "18.5vw",
+        "CONHAQUE": "17.5vw",
+        "VERMOUTH": "17.5vw",
+        "TEQUILA": "20vw",
+        "CACHAÇA": "20vw",
+        "default": "min(28vw, max(14vw, 160÷textLength))"
+      }
+    },
+
+    "bottle_image": {
+      "container": {
+        "height": 480,
+        "maxWidth": 360,
+        "perspective": "1200px",
+        "perspectiveOrigin": "center center",
+        "position": "relative flex items-end justify-center"
+      },
+      "image": {
+        "maxHeight": 460,
+        "maxWidth": 280,
+        "objectFit": "contain",
+        "filter": "drop-shadow(0 28px 20px rgba(0,0,0,0.18))",
+        "draggable": false,
+        "zIndex": 5
+      },
+      "ground_shadow": {
+        "description": "Sombra oval na base da garrafa",
+        "position": "absolute bottom-[4px] left-50%",
+        "width": 160,
+        "height": 18,
+        "borderRadius": "50%",
+        "background": "radial-gradient(ellipse at center, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.06) 55%, transparent 100%)",
+        "zIndex": 1
+      },
+      "transition": {
+        "type": "rotateY 3D flip",
+        "enter": "rotateY: ±90° → 0°, opacity: 0→1, scale: 0.95→1",
+        "exit": "rotateY: 0° → ∓90°, opacity: 1→0, scale: 1→0.95",
+        "duration": "450ms easeOutCubic [0.33, 0.66, 0.66, 1]",
+        "trigger": "swipe horizontal (threshold 30px) ou clique em indicador"
+      }
+    },
+
+    "orbit_ring": {
+      "description": "Anel elíptico SVG inclinado abaixo da garrafa simulando sombra 3D",
+      "position": "absolute bottom-[-20px] left-50% translateX(-50%)",
+      "size": "320x84px",
+      "ellipse": "cx=160 cy=42 rx=155 ry=36",
+      "stroke": "url(#pdOrbitGrad) strokeWidth=2",
+      "gradient": "vertical do liquidColor: 100%opacity→60%→10%→0%",
+      "filter": "feGaussianBlur stdDeviation=2 + feMerge glow"
+    },
+
+    "liquid_gauge": {
+      "description": "Indicador de volume da garrafa aberta — arrastável pelo admin",
+      "visible_when": "product.is_opened === true",
+      "position": "absolute, padrão left=85% top=2% (configurável por admin)",
+      "adminDraggable": true,
+      "style": "Apple Liquid Glass (backdrop-filter blur(40px) + inset box-shadows realistas)",
+      "padding": "10px 14px",
+      "borderRadius": "20px",
+      "layout": "flex row, gap 14px",
+      "liquid_capsule": {
+        "width": 12,
+        "height": 64,
+        "borderRadius": 12,
+        "background": "rgba(0,0,0,0.04)",
+        "border": "1px solid rgba(0,0,0,0.05)",
+        "insetShadow": "inset 0 2px 4px rgba(0,0,0,0.1)",
+        "fill": {
+          "height": "{opening_level}%",
+          "background": "linear-gradient(90deg, rgba(255,255,255,0.2) 0%, transparent 40%, rgba(0,0,0,0.1) 100%), linear-gradient(180deg, {liquidColor} 0%, {liquidColor}CC 100%)",
+          "glow": "0 0 8px {liquidColor}66",
+          "transition": "height 0.5s ease-out"
+        }
+      },
+      "text_area": {
+        "percentage": { "fontSize": 28, "fontWeight": 300, "letterSpacing": "-0.04em", "color": "#111827" },
+        "percent_symbol": { "fontSize": 14, "fontWeight": 600, "color": "liquidColor" },
+        "divider": "1px rgba(0,0,0,0.06) horizontal",
+        "volume_remaining": { "fontSize": 10, "fontWeight": 600, "color": "#6B7280", "letterSpacing": "0.06em", "textTransform": "uppercase" },
+        "volume_total": { "fontSize": 9, "fontWeight": 500, "color": "#9CA3AF", "letterSpacing": "0.04em" }
+      }
+    },
+
+    "nav_indicator": {
+      "description": "Círculo glass centralizado no arco inferior do orbit ring com ícone de setas",
+      "position": "absolute left-50% bottom-[-36px] translateX(-50%)",
+      "size": "44x44px",
+      "borderRadius": "50%",
+      "background": "rgba(255, 255, 255, 0.05)",
+      "backdropFilter": "blur(24px) saturate(180%)",
+      "border": "0.5px solid rgba(255, 255, 255, 0.45)",
+      "boxShadow": "inset 0 0 12px rgba(255,255,255,0.1), 0 4px 15px rgba(0,0,0,0.05)",
+      "icon": "setas duplas horizontais ← → 22x22 strokeWidth=1.6 #000000",
+      "pointerEvents": "none"
+    },
+
+    "swipe_navigation": {
+      "type": "Framer Motion drag='x'",
+      "threshold": 30,
+      "dragElastic": 0.6,
+      "dragConstraints": "{ left:0, right:0 }",
+      "behavior": "swipe left → próximo produto, swipe right → produto anterior"
+    }
+  },
+
+  "content_section": {
+    "padding": "px-6 pt-10",
+    "maxWidth": "max-w-lg mx-auto",
+    "animation": {
+      "type": "staggerContainer + fadeUpItem",
+      "staggerChildren": 0.1,
+      "delayChildren": 0.2,
+      "fadeUp": "opacity 0→1, y 20→0, duration 0.6s ease [0.16, 1, 0.3, 1]"
+    },
+
+    "status_badge": {
+      "description": "Badge centralizado abaixo da garrafa, visível somente quando is_closed=true",
+      "position": "mt-[48px] flex justify-center",
+      "text": "PRODUTO FECHADO",
+      "component": "StatusBadge custom"
+    },
+
+    "product_identity": {
+      "layout": "text-center pb-6 flex flex-col items-center",
+      "pre_title": {
+        "layout": "flex items-center gap-3 mb-4 opacity-40",
+        "line": "h-[0.5px] w-6 bg-foreground",
+        "text": {
+          "content": "{CATEGORIA} • {PAÍS}",
+          "fontSize": "9px",
+          "tracking": "0.4em",
+          "uppercase": true,
+          "fontWeight": "bold",
+          "fontFamily": "Outfit"
+        }
+      },
+      "title": {
+        "tag": "h1",
+        "fontSize": "text-3xl md:text-4xl",
+        "fontWeight": "bold",
+        "fontFamily": "Outfit",
+        "letterSpacing": "tracking-tight",
+        "lineHeight": "1.15",
+        "color": "foreground",
+        "maxWidth": "95%",
+        "dropShadow": "sm"
+      }
+    },
+
+    "price_section": {
+      "layout": "flex flex-col items-center gap-2 pb-2",
+      "currency_label": {
+        "text": "R$",
+        "fontSize": "text-sm",
+        "fontWeight": "bold",
+        "color": "muted-foreground/30",
+        "tracking": "0.2em",
+        "uppercase": true,
+        "fontFamily": "Outfit"
+      },
+      "price": {
+        "fontSize": "text-5xl",
+        "fontWeight": "bold",
+        "letterSpacing": "tracking-tighter",
+        "fontFamily": "Outfit",
+        "format": "inteiro + decimal separado — ex: '89' + ',00' (decimal text-2xl opacity-60)"
+      },
+      "discount_badge": {
+        "visible_when": "is_opened AND discount > 0",
+        "layout": "flex items-center gap-3 mt-1",
+        "original_price": { "fontSize": "11px", "color": "muted-foreground/40", "textDecoration": "line-through", "fontFamily": "Outfit" },
+        "badge": {
+          "padding": "px-4 py-1.5",
+          "borderRadius": "rounded-full",
+          "backdropFilter": "blur(2rem)",
+          "border": "border-white/40",
+          "background": "linear-gradient(135deg, {liquidColor}22 0%, rgba(255,255,255,0.1) 100%)",
+          "text": "-{discount}% OFF",
+          "fontSize": "11px",
+          "fontWeight": "black",
+          "tracking": "0.12em",
+          "color": "liquidColor (ou #111827 se dark)"
+        }
+      },
+      "floor_badge": {
+        "visible_when": "pricing.isFloorActive AND NOT isCritical",
+        "text": "Preço Mínimo",
+        "style": "px-3 py-1 rounded-full bg-amber-500/5 border-amber-500/10 text-[9px] font-bold tracking-[0.15em] uppercase text-amber-600"
+      },
+      "critical_badge": {
+        "visible_when": "pricing.isCritical",
+        "text": "Dose Final",
+        "style": "px-3 py-1 rounded-full bg-red-600/5 border-red-600/10 text-[9px] font-bold tracking-[0.15em] uppercase text-red-600"
+      }
+    },
+
+    "description": {
+      "visible_when": "product.description exists",
+      "layout": "mt-8 mb-6 px-4",
+      "paragraph": {
+        "fontSize": "14px",
+        "color": "#343a40",
+        "fontWeight": "normal",
+        "lineHeight": "1.9",
+        "letterSpacing": "tracking-tight",
+        "textAlign": "left",
+        "antialiased": true
+      },
+      "drop_cap": {
+        "description": "Primeira letra em estilo editorial tipográfico",
+        "float": "left",
+        "fontSize": "3.8rem",
+        "fontFamily": "Bodoni Moda (serif italic)",
+        "lineHeight": "0.75",
+        "marginRight": "1rem (mr-4)",
+        "marginTop": "0.5rem (mt-2)",
+        "color": "isDarkLiquid ? liquidColor : #111827",
+        "opacity": 0.95
+      }
+    },
+
+    "sensory_profile_card": {
+      "layout": "rounded-[2.5rem] p-8 mt-4 overflow-hidden",
+      "background": "rgba(255, 255, 255, 0.72)",
+      "backdropFilter": "blur(30px)",
+      "border": "0.5px solid rgba(255,255,255,0.5)",
+      "boxShadow": "inset 0 1px 1px rgba(255,255,255,0.5), 0 24px 48px -12px {liquidColor}15, 0 12px 24px -12px rgba(0,0,0,0.05)",
+      "title": {
+        "text": "Perfil Sensorial",
+        "fontSize": "14px",
+        "fontFamily": "Bodoni Moda (serif italic)",
+        "textAlign": "center",
+        "marginBottom": "1.5rem (mb-6)",
+        "color": "isDarkLiquid ? {liquidColor}CC : #111827"
+      },
+      "grid": {
+        "columns": 2,
+        "gap": "2.5 (10px)",
+        "maxWidth": 320,
+        "centered": true
+      },
+      "tag": {
+        "layout": "flex items-center px-4 py-2.5 gap-2.5",
+        "background": "bg-white/40 backdrop-blur-md",
+        "border": "0.5px solid rgba(255,255,255,0.6)",
+        "borderRadius": "rounded-xl",
+        "hoverAnimation": "scale 1.05, y -2",
+        "color": "isDarkLiquid ? liquidColor : #111827",
+        "boxShadow": "0 4px 12px -4px {liquidColor}10, inset 0 1px 1px rgba(255,255,255,0.6)",
+        "icon": {
+          "size": "w-4 h-4",
+          "strokeWidth": 1.2,
+          "opacity": 0.8,
+          "scale": "90%"
+        },
+        "label": {
+          "fontSize": "9px",
+          "tracking": "0.2em",
+          "uppercase": true,
+          "fontWeight": "bold",
+          "fontFamily": "Outfit",
+          "color": "foreground/70"
+        }
+      },
+      "available_icons": {
+        "Amadeirado": "3 círculos concêntricos",
+        "Cítrico": "círculo com cruz + diagonais",
+        "Mel": "hexágono 3D (honeycomb)",
+        "Defumado": "3 linhas de fumaça",
+        "Floral": "5 círculos radiais (flor)",
+        "Frutado": "formato de fruta + caule",
+        "Herbáceo": "folha com tronco V",
+        "Especiarias": "estrela de 5 pontas",
+        "Chocolate": "grade de tabletes",
+        "Caramelo": "gota de água",
+        "Baunilha": "vagem + haste",
+        "Marítimo": "2 ondas paralelas",
+        "Terroso": "semicírculo + haste",
+        "Tropical": "círculo + folha de palmeira",
+        "Turfado": "retângulo + linhas",
+        "Nozes": "elipse com linhas internas",
+        "Mentolado": "sol com raios + cruz",
+        "Picante": "chama + haste"
+      }
+    },
+
+    "specs_card": {
+      "layout": "rounded-[2.5rem] p-8 mt-4 mb-8 overflow-hidden",
+      "background": "rgba(255, 255, 255, 0.72)",
+      "backdropFilter": "blur(30px)",
+      "border": "0.5px solid rgba(255,255,255,0.5)",
+      "boxShadow": "inset 0 1px 1px rgba(255,255,255,0.5), 0 24px 48px -12px {liquidColor}10, 0 12px 24px -12px rgba(0,0,0,0.05)",
+      "title": {
+        "text": "Especificações",
+        "fontSize": "14px",
+        "fontFamily": "Bodoni Moda (serif italic)",
+        "textAlign": "center",
+        "marginBottom": "1.5rem",
+        "color": "isDarkLiquid ? {liquidColor}CC : #111827"
+      },
+      "spec_row": {
+        "layout": "flex items-baseline justify-between py-3.5",
+        "borderBottom": "0.5px solid rgba(0,0,0,0.05) — removido no last-child",
+        "label": {
+          "fontSize": "8px",
+          "tracking": "0.3em",
+          "uppercase": true,
+          "color": "foreground/40",
+          "fontFamily": "Outfit",
+          "fontWeight": "bold"
+        },
+        "value": {
+          "fontSize": "12px",
+          "tracking": "0.05em",
+          "uppercase": true,
+          "color": "foreground",
+          "fontWeight": "medium",
+          "fontFamily": "Outfit",
+          "textAlign": "right",
+          "maxWidth": "65%"
+        }
+      },
+      "fields": ["Categoria", "Origem", "ABV"]
+    },
+
+    "cta_button": {
+      "layout": "pb-10 px-6 flex justify-center mt-4",
+      "buttonMaxWidth": 280,
+      "type": "HolographicButton",
+      "description": "Botão com bordas holográficas animadas — gradiente prata em rotação infinita + glow",
+      "text": "Solicitar Reserva",
+      "text_style": {
+        "fontSize": "12px",
+        "fontWeight": "semibold",
+        "fontFamily": "Outfit",
+        "tracking": "0.15em",
+        "uppercase": true,
+        "textAlign": "center"
+      },
+      "border_animation": {
+        "gradient": "linear-gradient(90deg, #71717a 0%, #e4e4e7 25%, #ffffff 50%, #e4e4e7 75%, #71717a 100%)",
+        "backgroundSize": "200% 100%",
+        "animation": "rotate 10s linear infinite",
+        "implementation": "::before pseudo-element com mask-composite: exclude"
+      },
+      "glow_animation": {
+        "keyframes": "pulse 3s cubic-bezier(0.4,0,0.2,1) infinite",
+        "boxShadow": "0 0 6px rgba(161,161,170,0.15), 0 0 12px rgba(228,228,231,0.08) → 0 0 12px rgba(161,161,170,0.3), 0 0 24px rgba(228,228,231,0.15)"
+      },
+      "hover": "scale 1.03, glow ativo",
+      "active": "scale 0.97"
+    }
+  },
+
+  "liquid_color_system": {
+    "description": "Sistema de cores do líquido — define o tom dominante de toda a página",
+    "usage": "liquidColor é extraído do campo 'color' do produto, ou calculado automaticamente por categoria",
+    "default_by_category": {
+      "Whisky": "#D97706",
+      "Bourbon": "#B45309",
+      "Rum": "#C2410C",
+      "Cachaça": "#F59E0B",
+      "Gin": "#0EA5E9",
+      "Vodka": "#64748B",
+      "Tequila": "#84CC16",
+      "Mezcal": "#78716C",
+      "Amaro": "#7C3AED",
+      "Licor": "#EC4899",
+      "Vermouth": "#DC2626",
+      "Cognac/Brandy": "#92400E",
+      "Pisco": "#FCD34D",
+      "Bitter/Aperitivo": "#F97316",
+      "Outros": "#374151"
+    },
+    "isDarkLiquid": "liquidColor === '#0A0A0A' || '#111827' → usa branco como accentColor",
+    "applications": [
+      "Aurora background (6 variações de opacidade)",
+      "Categoria watermark (gradient text)",
+      "Orbit ring stroke",
+      "Liquid capsule fill + glow",
+      "Liquid gauge % symbol color",
+      "Discount badge background + text",
+      "Sensory card box-shadow tint",
+      "Drop cap color",
+      "Sensory tag color",
+      "Specs card section header color"
+    ]
+  },
+
+  "glass_morphism_system": {
+    "description": "Sistema de vidro/glass usado em múltiplos componentes",
+    "variants": {
+      "standard_glass": {
+        "background": "rgba(255, 255, 255, 0.72)",
+        "backdropFilter": "blur(30px)",
+        "border": "0.5px solid rgba(255, 255, 255, 0.5)",
+        "borderRadius": "2.5rem",
+        "usage": "Cards de perfil sensorial e especificações"
+      },
+      "apple_tahoe_liquid_glass": {
+        "background": "rgba(255, 255, 255, 0.05 a 0.7)",
+        "backdropFilter": "blur(40px) saturate(180%) + SVG displacement map",
+        "boxShadow": "stack de 10 inset shadows simulando refração de vidro real",
+        "usage": "Back button, Share button, Liquid gauge, Nav indicator"
+      },
+      "nav_indicator": {
+        "background": "rgba(255, 255, 255, 0.05)",
+        "backdropFilter": "blur(24px) saturate(180%)",
+        "border": "0.5px solid rgba(255, 255, 255, 0.45)",
+        "boxShadow": "inset 0 0 12px rgba(255,255,255,0.1), 0 4px 15px rgba(0,0,0,0.05)"
+      }
+    }
+  },
+
+  "typography_system": {
+    "fonts": {
+      "Bodoni Moda": {
+        "weight": "italic",
+        "usage": ["Drop cap da descrição", "Títulos das seções (cards)", "Palavra 'Acervo' no hero"]
+      },
+      "Outfit": {
+        "weight": "100–900",
+        "usage": ["Labels uppercase (CATEGORIA, ABV, etc)", "Preço", "Título do produto (h1)", "Tags sensoriais", "Botão CTA", "Pre-title", "Badges"]
+      },
+      "Inter": {
+        "weight": "300–500",
+        "usage": ["Corpo de texto (descrição)", "Base da página"]
+      }
+    },
+    "scale": {
+      "category_watermark": "clamp(60px, ~20vw, 160px) weight-900",
+      "h1_product_name": "text-3xl/4xl (30–36px) weight-bold",
+      "pre_title": "9px tracking-[0.4em] uppercase bold",
+      "price_integer": "text-5xl (48px) weight-bold tracking-tighter",
+      "price_decimal": "text-2xl (24px) weight-medium opacity-60",
+      "currency_label": "text-sm (14px) weight-bold opacity-30 tracking-[0.2em]",
+      "section_title": "14px serif italic",
+      "spec_label": "8px tracking-[0.3em] uppercase bold opacity-40",
+      "spec_value": "12px tracking-[0.05em] uppercase medium",
+      "sensory_tag": "9px tracking-[0.2em] uppercase bold opacity-70",
+      "badge_text": "9–11px tracking-[0.12–0.15em] uppercase black/semibold",
+      "description_body": "14px leading-[1.9] tracking-tight normal",
+      "drop_cap": "3.8rem (~61px) serif italic"
+    }
+  },
+
+  "animation_system": {
+    "page_entrance": {
+      "type": "staggerContainer",
+      "staggerChildren": "100ms",
+      "delayChildren": "200ms",
+      "item_animation": "fadeUpItem — y: 20→0, opacity: 0→1, duration: 600ms, ease: [0.16, 1, 0.3, 1]"
+    },
+    "bottle_flip": {
+      "enter": "rotateY ±90°→0°, opacity 0→1, scale 0.95→1, 450ms easeOutCubic",
+      "exit": "rotateY 0°→∓90°, opacity 1→0, scale 1→0.95, 450ms easeInCubic"
+    },
+    "sensory_tag_hover": "scale 1.05, y -2, transition-all",
+    "holographic_border": "background-position 0%→200%, 10s linear infinite",
+    "holographic_glow_pulse": "box-shadow pulse, 3s cubic-bezier(0.4,0,0.2,1) infinite",
+    "aurora_background": "aurora gradient, 60s linear infinite",
+    "liquid_fill_transition": "height 0.5s ease-out"
+  },
+
+  "layout_zones": {
+    "1_hero": {
+      "description": "Área da garrafa com background aurora, categoria watermark, orbit ring, imagem, liquid gauge",
+      "height": "~480–540px",
+      "structure": ["AuroraBackground", "CategoryWatermark (draggable)", "SwipeContainer > OrbitRing + BottleImage + LiquidGauge (draggable) + NavIndicator"]
+    },
+    "2_status": {
+      "description": "Badge PRODUTO FECHADO (só para garrafas fechadas)",
+      "marginTop": "48px"
+    },
+    "3_identity": {
+      "description": "Pre-title + h1 centralizados",
+      "paddingTop": "40px"
+    },
+    "4_price": {
+      "description": "Preço grande + badges de desconto/floor/crítico"
+    },
+    "5_description": {
+      "description": "Texto longo com drop cap tipográfico",
+      "marginTop": "2rem",
+      "marginBottom": "1.5rem"
+    },
+    "6_sensory_card": {
+      "description": "Card glass com grid 2 colunas de tags sensoriais"
+    },
+    "7_specs_card": {
+      "description": "Card glass com linhas de especificações (Categoria, Origem, ABV)"
+    },
+    "8_cta": {
+      "description": "Botão holográfico centralizado",
+      "paddingBottom": "40px"
+    }
+  }
+}

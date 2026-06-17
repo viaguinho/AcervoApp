@@ -1,0 +1,656 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-primary: 'Outfit', 'PP Neue Montreal', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-inter: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+    /* Cores Core (Design Tokens Augen Pro - do Acervo - Estilo Apple) */
+    --color-ink-black: #0f1012;
+    --color-canvas-mist: #f2f2f4;
+    --color-paper-white: #fdfdfd;
+    --color-fog-gray: #8f8f8f;
+    --color-smoke-gray: #5e5e5e;
+    --color-signal-blue: #0071e3;
+
+    /* Micro-animações estéticas Apple / Emil Kowalski */
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+
+    /* Glassmorphism Específico */
+    --glass-bg-card: rgba(253, 253, 253, 0.65);
+    --glass-bg-sheet: rgba(253, 253, 253, 0.75);
+    --glass-bg-nav: rgba(253, 253, 253, 0.8);
+    --glass-border: 1.8px solid rgba(15, 16, 18, 0.08);
+    --glass-border-light: 1.8px solid rgba(253, 253, 253, 0.45);
+    --glass-shadow: 0 8px 32px 0 rgba(15, 16, 18, 0.04);
+    --glass-shadow-large: 0 16px 48px 0 rgba(15, 16, 18, 0.08);
+
+    /* Radii & Outros do Acervo */
+    --radius-surface: 63px;
+    --radius-button: 26px;
+    --radius-tagpill: 9999px;
+    --border-hairline: 1.8px;
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+
+    /* Transições */
+    --transition-fast: 150ms cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-medium: 300ms cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-slow: 500ms cubic-bezier(0.16, 1, 0.3, 1);
+
+    /* Escala de Tamanhos (Font Sizes) */
+    --text-caption: 10px;      /* Menores elementos como etiquetas, badges e países */
+    --text-body: 14px;         /* Texto padrão da aplicação, descrição de produtos e sacola */
+    --text-body-md: 16px;      /* Texto de destaque em modais e inputs */
+    --text-body-lg: 18px;      /* Títulos menores e valores dinâmicos */
+    --text-heading: 27px;      /* Títulos de páginas e seções principais */
+
+    /* Pesos de Fonte (Font Weights) */
+    --font-weight-light: 350;   /* Estética editorial leve, muito usada nos títulos e rótulos */
+    --font-weight-regular: 400; /* Leitura em geral de parágrafos e botões */
+
+    --background: 48 20% 97%;
+    --foreground: 150 10% 8%;
+    --card: 48 20% 99%;
+    --card-foreground: 150 10% 8%;
+    --popover: 48 20% 99%;
+    --popover-foreground: 150 10% 8%;
+    --primary: 32 38% 54%; /* Latão Escovado */
+    --primary-foreground: 48 20% 97%;
+    --secondary: 45 20% 94%;
+    --secondary-foreground: 150 10% 8%;
+    --muted: 45 20% 92%;
+    --muted-foreground: 155 5% 37%;
+    --accent: 45 15% 90%;
+    --accent-foreground: 150 10% 8%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 45 12% 88%;
+    --input: 45 12% 88%;
+    --ring: 32 38% 54%;
+    --chart-1: 32 38% 54%;
+    --chart-2: 150 10% 30%;
+    --chart-3: 199 89% 48%;
+    --chart-4: 43 96% 64%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.75rem;
+
+    --glass-bg: rgba(255, 255, 255, 0.72);
+    --glass-border: rgba(255, 255, 255, 0.5);
+    --glass-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    --glass-blur-sm: blur(15px);
+    --glass-blur-md: blur(30px) saturate(180%);
+    --glass-blur-lg: blur(40px) saturate(200%);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Design Acervo App - Planetary Tokens */
+    --white-ice: 240 10% 95%;
+    --sun-gradient: linear-gradient(90deg, #3B1F0A 0%, #7C4A1E 25%, #C8813A 50%, #7C4A1E 75%, #3B1F0A 100%);
+    --mercury-gradient: linear-gradient(90deg, #27272a 0%, #52525b 25%, #d4d4d8 50%, #52525b 75%, #27272a 100%);
+    --uranus-gradient: linear-gradient(90deg, #3B1F0A 0%, #7C4A1E 30%, #C8813A 50%, #7C4A1E 70%, #3B1F0A 100%);
+    --neptune-gradient: linear-gradient(90deg, #3B1F0A 0%, #7C4A1E 30%, #C8813A 50%, #7C4A1E 70%, #3B1F0A 100%);
+    --pluto-gradient: linear-gradient(90deg, #3B1F0A 0%, #7C4A1E 30%, #C8813A 50%, #7C4A1E 70%, #3B1F0A 100%);
+
+  }
+
+  .dark {
+    /* Premium Bar Dark Mode: Piano Black, Graphite, Amber Lights */
+    --background: 240 10% 4%; /* Almost black with subtle cool undertone */
+    --foreground: 45 30% 90%; /* Soft off-white/warm */
+    --card: 240 10% 6%; /* Graphite */
+    --card-foreground: 45 30% 90%;
+    --popover: 240 10% 6%;
+    --popover-foreground: 45 30% 90%;
+    --primary: 38 92% 50%; /* Warm Amber/Gold */
+    --primary-foreground: 240 10% 4%;
+    --secondary: 240 10% 12%; /* Lighter Graphite */
+    --secondary-foreground: 45 30% 90%;
+    --muted: 240 10% 12%;
+    --muted-foreground: 240 5% 65%;
+    --accent: 38 92% 15%; /* Dark Amber background for hover */
+    --accent-foreground: 38 92% 60%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 10% 15%; /* Subtle borders */
+    --input: 240 10% 12%;
+    --ring: 38 92% 50%; /* Amber focus rings */
+    --chart-1: 38 92% 50%;
+    --chart-2: 240 5% 65%;
+    --chart-3: 199 89% 52%;
+    --chart-4: 43 96% 70%;
+    --chart-5: 27 87% 75%;
+
+    --glass-bg: rgba(28, 28, 30, 0.72);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+    --glass-blur-sm: blur(15px);
+    --glass-blur-md: blur(30px) saturate(180%);
+    --glass-blur-lg: blur(40px) saturate(200%);
+
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    background-color: hsl(var(--white-ice));
+    color: hsl(var(--foreground));
+    font-family: var(--font-inter);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-primary);
+    font-weight: var(--font-weight-light);
+  }
+}
+
+/* ==================== SOLUÃ‡ÃƒO PARA TREMOR NAS LATERAIS ==================== */
+/* Remove scrollbar flicker/tremor mantendo espaÃ§o reservado */
+
+html {
+  overflow-y: scroll;
+}
+
+body {
+  overflow-x: clip;
+}
+
+/* ============================================================================ */
+
+@layer utilities {
+  .active-scale {
+    transition: transform 160ms var(--ease-out) !important;
+  }
+  .active-scale:active {
+    transform: scale(0.97) !important;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
+  }
+
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur-md);
+    -webkit-backdrop-filter: var(--glass-blur-md);
+    border: 0.5px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+  }
+
+  .glass-strong {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(30px) saturate(150%);
+    -webkit-backdrop-filter: blur(30px) saturate(150%);
+    border: 0.5px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  }
+
+  .gradient-silver {
+    background: linear-gradient(135deg, #f3f4f6 0%, #d1d5db 50%, #f3f4f6 100%);
+  }
+
+  .gradient-silver-dark {
+    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 50%, #252525 100%);
+  }
+
+  .text-gradient-silver {
+    background: linear-gradient(135deg, #9ca3af 0%, #f3f4f6 50%, #9ca3af 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .shimmer {
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  .line-separator {
+    height: 0.5px;
+    background: linear-gradient(90deg, transparent, hsl(var(--border)), transparent);
+  }
+
+  /* Planetary Gradients Utilities */
+  .bg-sun-gradient { background: var(--sun-gradient); }
+  .bg-mercury-gradient { background: var(--mercury-gradient); }
+  .bg-uranus-gradient { background: var(--uranus-gradient); }
+  .bg-neptune-gradient { background: var(--neptune-gradient); }
+  .bg-pluto-gradient { background: var(--pluto-gradient); }
+
+  .text-sun-gradient {
+    background: var(--sun-gradient) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    display: inline-block;
+  }
+
+  .text-mercury-gradient {
+    background: var(--mercury-gradient) !important;
+    background-size: 200% auto !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    display: inline-block;
+    animation: shine 8s linear infinite;
+  }
+
+  .text-acervo-gradient {
+    background: var(--mercury-gradient) !important;
+    background-size: 200% auto !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    display: inline-block;
+    animation: shine 12s linear infinite;
+  }
+
+  @keyframes shine {
+    to {
+      background-position: 200% center;
+    }
+  }
+
+  .text-pluto-gradient {
+    background: var(--pluto-gradient) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    display: inline-block;
+  }
+
+  .text-uranus-gradient {
+    background: var(--uranus-gradient) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    display: inline-block;
+  }
+
+  .text-neptune-gradient {
+    background: var(--neptune-gradient) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    display: inline-block;
+  }
+
+  /* Living Ferrofluid Styles */
+  .hero-section {
+    background-color: #000;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ferrofluid-canvas {
+    filter: url("#ferrofluid");
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  .globule {
+    opacity: 1;
+    border-radius: 50%;
+    animation: 18s ease-in-out infinite flow;
+    position: absolute;
+  }
+
+  .globule-1 {
+    background: radial-gradient(circle, #333, #000);
+    width: 450px;
+    height: 450px;
+    animation-duration: 18s;
+    animation-delay: 0s;
+    top: 10%;
+    left: 15%;
+  }
+
+  .globule-2 {
+    background: radial-gradient(circle, #444, #000);
+    width: 500px;
+    height: 500px;
+    animation-duration: 22s;
+    animation-delay: 4s;
+    bottom: 5%;
+    right: 10%;
+  }
+
+  .globule-3 {
+    background: radial-gradient(circle, #222, #000);
+    width: 350px;
+    height: 350px;
+    animation-duration: 15s;
+    animation-delay: 7s;
+    top: 50%;
+    left: 50%;
+  }
+}
+
+/* Esconder menu fixo quando filtros estão abertos */
+body.filter-modal-open nav.fixed.bottom-0 {
+  display: none !important;
+}
+
+/* Remoção Global de Scrollbars */
+* {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+*::-webkit-scrollbar {
+  display: none;             /* Chrome, Safari and Opera */
+}
+
+@theme inline {
+  @keyframes moveBackground {
+  from {
+    background-position: 0% 0%;
+    }
+  to {
+    background-position: 0% -1000%;
+    }
+  }
+  @keyframes flow {
+  0%, 100% {
+    transform: translateX(-20%) translateY(-20%) scale(0.9);
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    }
+  25% {
+    border-radius: 40% 60% 70% 30% / 40% 70% 30% 60%;
+    }
+  50% {
+    transform: translateX(20%) translateY(20%) scale(1.1);
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    }
+  75% {
+    transform: translateX(0%) translateY(0%) scale(1);
+    border-radius: 30% 70% 40% 60% / 70% 40% 60% 30%;
+    }
+  }
+}
+
+/* ==================== REMOÇÃO FORÇADA BASE44 BADGE ==================== */
+[id*="base44"], [class*="base44"],
+[id*="b44-edit"], [class*="b44-edit"],
+div[style*="z-index: 2147483647"],
+div[style*="z-index:2147483647"] {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+  width: 0 !important;
+  height: 0 !important;
+  position: absolute !important;
+  z-index: -9999 !important;
+}
+
+/* ==================== ESTILOS AGE-GATE E ONBOARDING (DO ACERVO) ==================== */
+
+.screen-age-gate {
+  position: fixed;
+  inset: 0;
+  background-color: var(--color-canvas-mist);
+  z-index: 1500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.age-gate-card {
+  background: var(--glass-bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: var(--glass-border);
+  border-radius: var(--radius-surface);
+  box-shadow: var(--glass-shadow);
+  padding: 40px 30px;
+  width: 100%;
+  max-width: 360px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.age-gate-logo {
+  font-size: 24px;
+  font-weight: var(--font-weight-light);
+  margin-bottom: 24px;
+  letter-spacing: -0.04em;
+  color: var(--color-ink-black);
+}
+
+.age-gate-logo strong {
+  font-weight: 500;
+}
+
+.age-gate-title {
+  font-size: 18px;
+  font-weight: var(--font-weight-regular);
+  margin-bottom: 12px;
+  color: var(--color-ink-black);
+}
+
+.age-gate-desc {
+  font-size: 13px;
+  color: var(--color-smoke-gray);
+  margin-bottom: 30px;
+  line-height: 1.45;
+}
+
+.age-gate-inputs {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+.age-input {
+  width: 60px;
+  height: 50px;
+  border: var(--border-hairline) solid rgba(15, 16, 18, 0.15);
+  border-radius: 14px;
+  text-align: center;
+  font-size: 18px;
+  font-family: var(--font-primary);
+  color: var(--color-ink-black);
+  background-color: rgba(255, 255, 255, 0.4);
+  outline: none;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.age-input.year {
+  width: 90px;
+}
+
+.age-input:focus {
+  border-color: var(--color-signal-blue);
+  background-color: var(--color-paper-white);
+}
+
+.age-error {
+  color: var(--color-signal-blue);
+  font-size: 12px;
+  margin-bottom: 24px;
+  min-height: 16px;
+  font-weight: 400;
+}
+
+.btn-ghost-link {
+  font-family: var(--font-primary);
+  font-size: 14px;
+  font-weight: var(--font-weight-regular);
+  color: var(--color-signal-blue);
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+
+.btn-ghost-link:hover {
+  opacity: 0.8;
+  transform: translateX(3px);
+}
+
+.screen-onboarding {
+  position: fixed;
+  inset: 0;
+  background-color: var(--color-canvas-mist);
+  z-index: 1400;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+}
+
+.onboarding-video-container {
+  flex: 1.3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  margin-top: -30px;
+}
+
+.onboarding-video {
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: var(--glass-border);
+  background: var(--glass-bg-card);
+  backdrop-filter: blur(15px);
+  box-shadow: var(--glass-shadow);
+}
+
+.onboarding-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  max-width: 360px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.onboarding-label {
+  font-size: 12px;
+  text-transform: lowercase;
+  color: var(--color-fog-gray);
+  margin-bottom: 12px;
+}
+
+.onboarding-title {
+  font-size: 27px;
+  font-weight: var(--font-weight-light);
+  line-height: 1.15;
+  margin-bottom: 16px;
+  letter-spacing: -0.54px;
+  color: var(--color-ink-black);
+}
+
+.onboarding-text {
+  font-size: 14px;
+  color: var(--color-smoke-gray);
+  line-height: 1.45;
+  margin-bottom: 30px;
+  text-align: justify;
+  text-wrap: pretty;
+}
+
+.onboarding-footer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-bottom: 20px;
+}
+
+.onboarding-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-fog-gray);
+  transition: background-color var(--transition-fast);
+}
+
+.dot.active {
+  background-color: var(--color-signal-blue);
+}
+
+.shake {
+  animation: shake-anim 250ms ease-in-out;
+}
+
+@keyframes shake-anim {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+/* ==================== ANIMAÇÃO DE LÍQUIDO SINCRONIZADA ==================== */
+@keyframes liquid-shared-drain-flow {
+  0%, 100% {
+    transform: translateY(-5px);
+  }
+  50% {
+    transform: translateY(92px);
+  }
+}
+.animate-liquid-drain {
+  animation: liquid-shared-drain-flow 15s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite !important;
+  transform-origin: bottom center;
+}

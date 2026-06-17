@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="pt-BR" class="notranslate" translate="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="google" content="notranslate" />
+    <meta name="googlebot" content="notranslate" />
+    <link rel="icon" type="image/svg+xml" href="https://base44.com/logo_v2.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>Base44 APP</title>
+    <style>
+      /* Ocultar base44 badges conhecidos */
+      [id*="base44-badge"], [class*="base44-badge"], 
+      [id*="b44-edit"], [class*="b44-edit"],
+      [id*="base44-edit-button"], a[href*="base44.app"], a[href*="base44.com"] {
+        display: none !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+        visibility: hidden !important;
+        width: 0 !important;
+        height: 0 !important;
+        z-index: -999 !important;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      (function() {
+        const removeBase44Badge = () => {
+          const els = document.querySelectorAll('div, a, button, span');
+          for (let i = 0; i < els.length; i++) {
+            const el = els[i];
+            if (el.textContent && el.textContent.includes('Edit with Base44')) {
+              let container = el;
+              for (let j = 0; j < 6; j++) {
+                if (!container || container === document.body) break;
+                const style = window.getComputedStyle(container);
+                if (style.position === 'fixed' || style.position === 'absolute' || style.zIndex == '2147483647') {
+                  container.style.setProperty('display', 'none', 'important');
+                  container.style.setProperty('opacity', '0', 'important');
+                  container.style.setProperty('pointer-events', 'none', 'important');
+                  container.remove();
+                  return true;
+                }
+                container = container.parentElement;
+              }
+            }
+          }
+          return false;
+        };
+
+        const observer = new MutationObserver(() => removeBase44Badge());
+        const startObs = setInterval(() => {
+          if (document.body) {
+            observer.observe(document.body, { childList: true, subtree: true });
+            removeBase44Badge();
+            clearInterval(startObs);
+          }
+        }, 100);
+        setTimeout(() => { removeBase44Badge(); observer.disconnect(); }, 8000);
+      })();
+    </script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

@@ -1,0 +1,59 @@
+{
+  "name": "ProductUILayout",
+  "type": "object",
+  "properties": {
+    "product_id": {
+      "type": "string",
+      "title": "Product ID"
+    },
+    "is_global_default": {
+      "type": "boolean",
+      "title": "Layout Global Padr\u00e3o",
+      "default": false
+    },
+    "drop_x": {
+      "type": "number",
+      "title": "Gota - posi\u00e7\u00e3o X (%)",
+      "default": 85
+    },
+    "drop_y": {
+      "type": "number",
+      "title": "Gota - posi\u00e7\u00e3o Y (%)",
+      "default": 2
+    },
+    "category_x": {
+      "type": "number",
+      "title": "Categoria - posi\u00e7\u00e3o X (%)",
+      "default": 50
+    },
+    "category_y": {
+      "type": "number",
+      "title": "Categoria - posi\u00e7\u00e3o Y (%)",
+      "default": 2
+    }
+  },
+  "required": [],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {},
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "write": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
