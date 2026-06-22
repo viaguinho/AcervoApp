@@ -169,7 +169,7 @@ export default function LandingPage() {
         <p className="onboarding-text">
           {onboardingStep === 1 
             ? 'Explore o nosso exclusivo acervo particular de bebidas. Descubra uma seleção de rótulos raros, edições limitadas e destilados artesanais minuciosamente selecionados por uma curadoria experiente, garantindo uma experiência sensorial única, autêntica e inesquecível a cada\u00a0dose.'
-            : 'Garrafas abertas em nosso bar contam com descontos dinâmicos calculados em tempo real, variando de acordo com o volume exato de líquido restante na garrafa. Unimos a sofisticação da mixologia de alta coquetelaria a uma política de preços totalmente justa, transparente e\u00a0inovadora.'
+            : 'Garrafas abertas contam com descontos dinâmicos calculados em tempo real, variando de acordo com o volume exato de líquido restante na garrafa. Unimos a sofisticação da mixologia de alta coquetelaria a uma política de preços totalmente justa e transparente.'
           }
         </p>
         

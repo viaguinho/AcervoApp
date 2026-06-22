@@ -253,7 +253,7 @@ export default function Home() {
             >
               <LiquidNumber value={totalLabels || 181} />
               <div 
-                className="px-2.5 py-3.5 rounded-xl bg-white/30 dark:bg-black/15 backdrop-blur-md border border-black/[0.06] dark:border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.55),0_8px_16px_-4px_rgba(0,0,0,0.03)] text-[#1d4ed8] dark:text-[#00d2ff] text-[10px] font-bold tracking-wider uppercase flex items-center justify-center select-none transition-all duration-300 hover:bg-white/40 hover:border-black/[0.08] active:scale-[0.97]"
+                className="px-2.5 py-3.5 rounded-xl bg-white/30 dark:bg-black/15 backdrop-blur-md border border-black/[0.06] dark:border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.55),0_8px_16px_-4px_rgba(0,0,0,0.03)] text-[#7c4a1e] dark:text-[#d4af37] text-[10px] font-bold tracking-wider uppercase flex items-center justify-center select-none transition-all duration-300 hover:bg-white/40 hover:border-black/[0.08] active:scale-[0.97]"
                 style={{
                   writingMode: 'vertical-rl',
                   textOrientation: 'mixed',
@@ -267,7 +267,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-
+ 
       {/* Specials - Carrossel 3D Perspective */}
       {specials.length > 0 && (
         <motion.div
@@ -282,7 +282,7 @@ export default function Home() {
               <div className="flex items-center gap-2">
                 <Sparkles
                   size={12}
-                  className="text-foreground/70"
+                  className="text-[#7c4a1e] dark:text-[#d4af37]"
                 />
                 <h2 className="text-[10px] uppercase text-foreground/50 font-medium tracking-[0.4em] font-outfit m-0">
                   Seleção Especial
