@@ -32,13 +32,16 @@ export default function Layout() {
       colors={{ color1: '#111', color2: '#222', color3: '#000', color4: '#1a1a1a', color5: '#0a0a0a' }}
       showRadialGradient={true}
     >
-      <div className="relative w-full max-w-[430px] h-screen bg-[#F8F9FA] dark:bg-background font-inter flex flex-col shadow-2xl border-x border-black/5 dark:border-white/5 overflow-hidden z-10 mx-auto">
+      <div className="relative w-full max-w-[430px] h-dvh bg-[#F8F9FA] dark:bg-background font-inter flex flex-col shadow-2xl border-x border-black/5 dark:border-white/5 overflow-hidden z-10 mx-auto">
         
         <main className="flex-1 overflow-y-auto overflow-x-hidden pb-24 pt-0 no-scrollbar relative z-0">
           <Outlet />
         </main>
 
-        <nav className="absolute bottom-0 w-full z-50 pointer-events-none pb-6 flex justify-center">
+        <nav 
+          className="absolute bottom-0 w-full z-50 pointer-events-none flex justify-center"
+          style={{ paddingBottom: "calc(1.5rem + env(safe-area-inset-bottom, 0px))" }}
+        >
           <div
             className="w-[92%] h-[68px] shadow-[0_12px_36px_rgba(0,0,0,0.08)] bg-[#fdfdfd] border flex items-center justify-around px-4 pointer-events-auto"
             style={{
