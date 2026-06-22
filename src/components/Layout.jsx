@@ -28,7 +28,7 @@ export default function Layout() {
 
   return (
     <AuroraBackground 
-      className="min-h-screen w-full flex justify-center fixed inset-0"
+      className="min-h-screen w-full flex justify-start fixed inset-0"
       colors={{ color1: '#111', color2: '#222', color3: '#000', color4: '#1a1a1a', color5: '#0a0a0a' }}
       showRadialGradient={true}
     >
