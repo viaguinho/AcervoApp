@@ -88,12 +88,12 @@ export function LiquidNumber({ value = 0 }) {
       {/* CSS injetado inline para manter o componente autocontido e otimizado na GPU */}
       <style>{`
         :root {
-          --liquid-top: #C8813A; /* Dourado Âmbar (Do Sun Gradient da marca) */
-          --liquid-bottom: #7C4A1E; /* Bronze Quente / Whisky */
+          --liquid-top: #00d2ff; /* Azul Ciano / Elétrico Vivo */
+          --liquid-bottom: #1d4ed8; /* Azul Royal Profundo */
         }
         .dark {
-          --liquid-top: #E5A96F; /* Dourado Suave Iluminado */
-          --liquid-bottom: #5C3312; /* Âmbar Profundo / Cognac */
+          --liquid-top: #00f2ff; /* Azul Neon / Ciano Brilhante */
+          --liquid-bottom: #1e3a8a; /* Azul Índigo Profundo */
         }
         @keyframes wave-horiz-1 {
           0% { transform: translateX(0); }

@@ -85,7 +85,7 @@ export const StatusBadge = ({ text = "PRODUTO FECHADO" }) => {
   return (
     <div
       ref={ref}
-      className="block w-[130px] sm:w-[180px] h-auto cursor-default"
+      className="block w-[160px] sm:w-[210px] h-auto cursor-default"
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
       onMouseEnter={onMouseEnter}
