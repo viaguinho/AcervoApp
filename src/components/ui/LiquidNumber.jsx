@@ -143,7 +143,9 @@ export function LiquidNumber({ value = 0 }) {
           textAnchor="middle"
           fill="none"
           strokeWidth="1.5"
-          className="text-[92px] font-bold font-sans tracking-tight stroke-primary/35"
+          stroke="var(--liquid-bottom)"
+          strokeOpacity="0.35"
+          className="text-[92px] font-bold font-sans tracking-tight"
         >
           {textValue}
         </text>
