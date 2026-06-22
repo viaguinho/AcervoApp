@@ -88,12 +88,12 @@ export function LiquidNumber({ value = 0 }) {
       {/* CSS injetado inline para manter o componente autocontido e otimizado na GPU */}
       <style>{`
         :root {
-          --liquid-top: #c8813a; /* Bronze claro / Dourado */
-          --liquid-bottom: #7c4a1e; /* Bronze escuro / Ouro envelhecido */
+          --liquid-top: hsl(var(--foreground) / 0.7); /* Mesma cor do ícone de estrela (foreground/70) */
+          --liquid-bottom: hsl(var(--foreground));
         }
         .dark {
-          --liquid-top: #d4af37; /* Ouro Metálico */
-          --liquid-bottom: #7c4a1e; /* Bronze escuro */
+          --liquid-top: hsl(var(--foreground) / 0.7); /* Mesma cor do ícone de estrela (foreground/70) */
+          --liquid-bottom: hsl(var(--foreground));
         }
         @keyframes wave-horiz-1 {
           0% { transform: translateX(0); }
