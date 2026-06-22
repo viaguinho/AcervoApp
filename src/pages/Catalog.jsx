@@ -46,22 +46,27 @@ export default function Catalog() {
 
   useEffect(() => {
     async function load() {
-      const data = await base44.entities.Product.list("-created_date", 500);
-      const filteredData = data.filter(p => p.id !== "_CATEGORY_CONFIG_" && p.name !== "_CATEGORY_CONFIG_").map(p => {
-        if (p.category === "Cachaca") p.category = "Cachaça";
-        if (p.name === "Goldwasser Danzig 22 Karat") p.category = "Licor";
-        if (p.category === "Bitter/Aperitivo" || p.name === "Absinthe Doc Pierre") p.category = "Aperitivo";
-        const localMatch = catalogoLocal.find(l => l.name === p.name);
-        if (localMatch) {
-          p.description = localMatch.description;
-        }
-        if (p.description) {
-          p.description = p.description.replace(/—/g, "");
-        }
-        return p;
-      });
-      setProducts(filteredData);
-      setLoading(false);
+      try {
+        const data = await base44.entities.Product.list("-created_date", 500);
+        const filteredData = data.filter(p => p.id !== "_CATEGORY_CONFIG_" && p.name !== "_CATEGORY_CONFIG_").map(p => {
+          if (p.category === "Cachaca") p.category = "Cachaça";
+          if (p.name === "Goldwasser Danzig 22 Karat") p.category = "Licor";
+          if (p.category === "Bitter/Aperitivo" || p.name === "Absinthe Doc Pierre") p.category = "Aperitivo";
+          const localMatch = catalogoLocal.find(l => l.name === p.name);
+          if (localMatch) {
+            p.description = localMatch.description;
+          }
+          if (p.description) {
+            p.description = p.description.replace(/—/g, "");
+          }
+          return p;
+        });
+        setProducts(filteredData);
+      } catch (error) {
+        console.error("Erro ao carregar catálogo:", error);
+      } finally {
+        setLoading(false);
+      }
     }
     load();
   }, []);

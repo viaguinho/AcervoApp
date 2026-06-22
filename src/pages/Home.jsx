@@ -84,69 +84,74 @@ export default function Home() {
 
   useEffect(() => {
     async function load() {
-      // @ts-ignore
-      const products = await base44.entities.Product.list("-created_date", 500);
-      products.forEach(p => {
-        if (p.category === "Cachaca") p.category = "Cachaça";
-        if (p.name === "Goldwasser Danzig 22 Karat") p.category = "Licor";
-        if (p.name === "Absinthe Doc Pierre") p.category = "Bitter/Aperitivo";
-        const localMatch = catalogoLocal.find(l => l.name === p.name);
-        if (localMatch) {
-          p.description = localMatch.description;
-        }
-        if (p.description) {
-          p.description = p.description.replace(/—/g, "");
-        }
-      });
-      const catMap = {};
-      const catImagesMap = {};
-      let globalConfig = {};
-
-      const configProduct = products.find(p => p.name === "_CATEGORY_CONFIG_");
-      if (configProduct && configProduct.description) {
-        try { globalConfig = JSON.parse(configProduct.description); } catch(e) {}
-      }
-
-      let activeCount = 0;
-      products.forEach((p) => {
-        if (p.category && p.category !== "_CONFIG_") {
-          activeCount++;
-          const normalizedCat = normalizeCategory(p.category);
-          catMap[normalizedCat] = (catMap[normalizedCat] || 0) + 1;
-          if (p.image_url && !catImagesMap[normalizedCat]) {
-            catImagesMap[normalizedCat] = p.image_url;
-          }
-        }
-      });
-
-      setTotalLabels(activeCount);
-      setCatImages(catImagesMap);
-      setConfig(globalConfig);
-      setCategories(
-        Object.entries(catMap)
-          .map(([name, count]) => ({ name, count }))
-          .sort((a, b) => b.count - a.count)
-      );
-      const ORDERED_IDS = [
-        "69ddaa4ccb2b09770cbf8dbb", // Monkey Shoulder (Whisky - Dourado)
-        "69dda9a0cb2b09770cbf8d7a", // Volcán Tequila Blanco (Tequila - Claro)
-        "69dda9a0cb2b09770cbf8d79", // Patron XO Cafe (Tequila/Licor - Escuro)
-        "69ddaa4ccb2b09770cbf8dbd", // Talisker 10 Anos (Whisky - Dourado)
-        "69dda94ccb2b09770cbf8d49", // El Pisco Calavera (Pisco - Claro)
-        "6a0dc3499ad1b7ea7552d5c1", // Hennessy Very Special (Cognac - Dourado)
-      ];
-      const specialsRaw = products.filter((p) => p.is_special && p.id !== "_CATEGORY_CONFIG_" && p.name !== "_CATEGORY_CONFIG_");
-      const ordered = ORDERED_IDS.map(id => specialsRaw.find(p => p.id === id)).filter(Boolean);
-      const rest = specialsRaw.filter(p => !ORDERED_IDS.includes(p.id));
-      setSpecials([...ordered, ...rest].slice(0, 6));
-      
-      // Verifica admin
       try {
-        const u = await base44.auth.me();
-        if (u?.role === "admin") setIsAdmin(true);
-      } catch (e) {}
+        // @ts-ignore
+        const products = await base44.entities.Product.list("-created_date", 500);
+        products.forEach(p => {
+          if (p.category === "Cachaca") p.category = "Cachaça";
+          if (p.name === "Goldwasser Danzig 22 Karat") p.category = "Licor";
+          if (p.name === "Absinthe Doc Pierre") p.category = "Bitter/Aperitivo";
+          const localMatch = catalogoLocal.find(l => l.name === p.name);
+          if (localMatch) {
+            p.description = localMatch.description;
+          }
+          if (p.description) {
+            p.description = p.description.replace(/—/g, "");
+          }
+        });
+        const catMap = {};
+        const catImagesMap = {};
+        let globalConfig = {};
 
-      setLoading(false);
+        const configProduct = products.find(p => p.name === "_CATEGORY_CONFIG_");
+        if (configProduct && configProduct.description) {
+          try { globalConfig = JSON.parse(configProduct.description); } catch(e) {}
+        }
+
+        let activeCount = 0;
+        products.forEach((p) => {
+          if (p.category && p.category !== "_CONFIG_") {
+            activeCount++;
+            const normalizedCat = normalizeCategory(p.category);
+            catMap[normalizedCat] = (catMap[normalizedCat] || 0) + 1;
+            if (p.image_url && !catImagesMap[normalizedCat]) {
+              catImagesMap[normalizedCat] = p.image_url;
+            }
+          }
+        });
+
+        setTotalLabels(activeCount);
+        setCatImages(catImagesMap);
+        setConfig(globalConfig);
+        setCategories(
+          Object.entries(catMap)
+            .map(([name, count]) => ({ name, count }))
+            .sort((a, b) => b.count - a.count)
+        );
+        const ORDERED_IDS = [
+          "69ddaa4ccb2b09770cbf8dbb", // Monkey Shoulder (Whisky - Dourado)
+          "69dda9a0cb2b09770cbf8d7a", // Volcán Tequila Blanco (Tequila - Claro)
+          "69dda9a0cb2b09770cbf8d79", // Patron XO Cafe (Tequila/Licor - Escuro)
+          "69ddaa4ccb2b09770cbf8dbd", // Talisker 10 Anos (Whisky - Dourado)
+          "69dda94ccb2b09770cbf8d49", // El Pisco Calavera (Pisco - Claro)
+          "6a0dc3499ad1b7ea7552d5c1", // Hennessy Very Special (Cognac - Dourado)
+        ];
+        const specialsRaw = products.filter((p) => p.is_special && p.id !== "_CATEGORY_CONFIG_" && p.name !== "_CATEGORY_CONFIG_");
+        const ordered = ORDERED_IDS.map(id => specialsRaw.find(p => p.id === id)).filter(Boolean);
+        const rest = specialsRaw.filter(p => !ORDERED_IDS.includes(p.id));
+        setSpecials([...ordered, ...rest].slice(0, 6));
+        
+        // Verifica admin
+        try {
+          const u = await base44.auth.me();
+          if (u?.role === "admin") setIsAdmin(true);
+        } catch (e) {}
+      } catch (error) {
+        console.error("Erro ao carregar dados do Home:", error);
+        toast.error("Erro ao carregar produtos. Verifique as configurações de API.");
+      } finally {
+        setLoading(false);
+      }
     }
 
     load();
