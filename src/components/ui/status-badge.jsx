@@ -58,18 +58,52 @@ export const StatusBadge = ({ text = "PRODUTO FECHADO" }) => {
 
   // Giroscópio para dispositivos móveis
   useEffect(() => {
+    let active = true;
     const handleOrientation = (event) => {
+      if (!active) return;
       const { beta, gamma } = event;
       if (beta !== null && gamma !== null) {
-        // Mapeia a inclinação para um valor de rotação dos reflexos
-        const tilt = Math.sqrt(beta * beta + gamma * gamma);
-        setFirstOverlayPosition(tilt * 1.5);
+        // Mapeia a inclinação direcional (eixos beta e gamma) para a rotação holográfica
+        const angle = (gamma || 0) * 2.2 + (beta || 0) * 0.8;
+        setFirstOverlayPosition(angle);
         setDisableOverlayAnimation(true);
+        setDisableInOutOverlayAnimation(false);
       }
     };
 
+    const initGyro = async () => {
+      if (
+        typeof DeviceOrientationEvent !== "undefined" &&
+        typeof DeviceOrientationEvent.requestPermission === "function"
+      ) {
+        try {
+          const response = await DeviceOrientationEvent.requestPermission();
+          if (response === "granted") {
+            window.addEventListener("deviceorientation", handleOrientation);
+            window.removeEventListener("click", initGyro);
+            window.removeEventListener("touchstart", initGyro);
+          }
+        } catch (e) {
+          console.error("Erro ao solicitar permissão de giroscópio:", e);
+        }
+      } else {
+        window.addEventListener("deviceorientation", handleOrientation);
+      }
+    };
+
+    // Tenta registrar diretamente (para navegadores sem restrição de clique prévio)
     window.addEventListener("deviceorientation", handleOrientation);
-    return () => window.removeEventListener("deviceorientation", handleOrientation);
+
+    // Registra listeners de ativação por toque na página (necessário no iOS)
+    window.addEventListener("click", initGyro);
+    window.addEventListener("touchstart", initGyro);
+
+    return () => {
+      active = false;
+      window.removeEventListener("deviceorientation", handleOrientation);
+      window.removeEventListener("click", initGyro);
+      window.removeEventListener("touchstart", initGyro);
+    };
   }, []);
 
   const overlayAnimations = [...Array(10).keys()].map((e) => (

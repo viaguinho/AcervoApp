@@ -931,7 +931,7 @@ export default function ProductDetail() {
                     WebkitTextFillColor: "transparent",
                     backgroundClip: "text",
                     pointerEvents: "none",
-                    filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.05))",
+                    display: "block"
                   };
                 })()}
               >
@@ -1203,7 +1203,7 @@ export default function ProductDetail() {
       {/* ── CARD INFERIOR SOBREPOSTO ── */}
       <motion.div 
         layout
-        className="bg-white rounded-t-[40px] shadow-[0_-12px_40px_rgba(0,0,0,0.04)] border-t border-black/[0.02] relative z-20 pb-16 pt-12 px-6 mt-12 flex flex-col gap-6 max-w-lg mx-auto overflow-hidden"
+        className="bg-white rounded-t-[40px] shadow-[0_-12px_40px_rgba(0,0,0,0.04)] border-t border-black/[0.02] relative z-20 mt-12 max-w-lg mx-auto"
         variants={staggerContainer}
         initial="hidden"
         animate="show"
@@ -1217,13 +1217,15 @@ export default function ProductDetail() {
           <ShoppingBag className="w-5 h-5" strokeWidth={1.8} />
         </button>
 
-        {/* Status Badge dentro do card */}
-        <AnimatePresence mode="popLayout" custom={direction} initial={false}>
-          <motion.div
-            key={product.id}
-            custom={direction}
-            variants={textVariants}
-            initial="enter"
+        {/* Wrapper com overflow-hidden para conter o slide dos textos sem cortar o botão flutuante */}
+        <div className="w-full overflow-hidden rounded-t-[40px] px-6 pb-16 pt-12 flex flex-col gap-6">
+          {/* Status Badge dentro do card */}
+          <AnimatePresence mode="popLayout" custom={direction} initial={false}>
+            <motion.div
+              key={product.id}
+              custom={direction}
+              variants={textVariants}
+              initial="enter"
             animate="center"
             exit="exit"
             className="flex flex-col gap-6 w-full"
@@ -1410,6 +1412,7 @@ export default function ProductDetail() {
             </div>
           </motion.div>
         </AnimatePresence>
+        </div>
 
       </motion.div>
     </div>
