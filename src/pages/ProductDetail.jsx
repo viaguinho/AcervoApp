@@ -209,11 +209,11 @@ function SpecRow({ label, value }) {
 
 const bottleVariants = {
   enter: (dir) => ({
-    x: dir > 0 ? 120 : -120,
-    rotateY: dir > 0 ? 35 : -35,
-    rotateZ: dir > 0 ? 10 : -10,
+    x: dir > 0 ? "100%" : "-100%",
+    rotateY: dir > 0 ? 15 : -15,
+    rotateZ: dir > 0 ? 6 : -6,
     opacity: 0,
-    scale: 0.9
+    scale: 0.92
   }),
   center: {
     x: 0,
@@ -222,47 +222,47 @@ const bottleVariants = {
     opacity: 1,
     scale: 1,
     transition: {
-      x: { type: "spring", stiffness: 300, damping: 28 },
-      rotateZ: { type: "spring", stiffness: 220, damping: 20 },
-      rotateY: { duration: 0.4, ease: "easeOut" },
-      opacity: { duration: 0.3 },
-      scale: { duration: 0.4, ease: "easeOut" }
+      x: { type: "spring", stiffness: 200, damping: 24 },
+      rotateZ: { type: "spring", stiffness: 150, damping: 18 },
+      rotateY: { type: "spring", stiffness: 150, damping: 18 },
+      opacity: { duration: 0.25 },
+      scale: { type: "spring", stiffness: 150, damping: 20 }
     }
   },
   exit: (dir) => ({
-    x: dir > 0 ? -120 : 120,
-    rotateY: dir > 0 ? -35 : 35,
-    rotateZ: dir > 0 ? -10 : 10,
+    x: dir > 0 ? "-100%" : "100%",
+    rotateY: dir > 0 ? -15 : 15,
+    rotateZ: dir > 0 ? -6 : 6,
     opacity: 0,
-    scale: 0.9,
+    scale: 0.92,
     transition: {
-      x: { duration: 0.35, ease: "easeIn" },
-      rotateZ: { duration: 0.35, ease: "easeIn" },
-      rotateY: { duration: 0.35, ease: "easeIn" },
-      opacity: { duration: 0.25 },
-      scale: { duration: 0.35, ease: "easeIn" }
+      x: { duration: 0.35, ease: [0.32, 0.94, 0.6, 1] },
+      rotateZ: { duration: 0.35, ease: [0.32, 0.94, 0.6, 1] },
+      rotateY: { duration: 0.35, ease: [0.32, 0.94, 0.6, 1] },
+      opacity: { duration: 0.2 },
+      scale: { duration: 0.35, ease: [0.32, 0.94, 0.6, 1] }
     }
   })
 };
 
 const textVariants = {
   enter: (dir) => ({
-    x: dir > 0 ? 60 : -60,
+    x: dir > 0 ? "100%" : "-100%",
     opacity: 0
   }),
   center: {
     x: 0,
     opacity: 1,
     transition: {
-      x: { type: "spring", stiffness: 260, damping: 26 },
-      opacity: { duration: 0.3 }
+      x: { type: "spring", stiffness: 200, damping: 24 },
+      opacity: { duration: 0.25 }
     }
   },
   exit: (dir) => ({
-    x: dir > 0 ? -60 : 60,
+    x: dir > 0 ? "-100%" : "100%",
     opacity: 0,
     transition: {
-      x: { duration: 0.25, ease: "easeIn" },
+      x: { duration: 0.35, ease: [0.32, 0.94, 0.6, 1] },
       opacity: { duration: 0.2 }
     }
   })
@@ -1008,7 +1008,8 @@ export default function ProductDetail() {
                     justifyContent: "center",
                     willChange: "transform, opacity",
                     transformStyle: "preserve-3d",
-                    backfaceVisibility: "hidden"
+                    backfaceVisibility: "hidden",
+                    transformOrigin: "bottom center"
                   }}>
                   
                   {product.image_url ? (
@@ -1201,7 +1202,8 @@ export default function ProductDetail() {
 
       {/* ── CARD INFERIOR SOBREPOSTO ── */}
       <motion.div 
-        className="bg-white rounded-t-[40px] shadow-[0_-12px_40px_rgba(0,0,0,0.04)] border-t border-black/[0.02] relative z-20 pb-16 pt-12 px-6 mt-12 flex flex-col gap-6 max-w-lg mx-auto"
+        layout
+        className="bg-white rounded-t-[40px] shadow-[0_-12px_40px_rgba(0,0,0,0.04)] border-t border-black/[0.02] relative z-20 pb-16 pt-12 px-6 mt-12 flex flex-col gap-6 max-w-lg mx-auto overflow-hidden"
         variants={staggerContainer}
         initial="hidden"
         animate="show"
@@ -1216,7 +1218,7 @@ export default function ProductDetail() {
         </button>
 
         {/* Status Badge dentro do card */}
-        <AnimatePresence mode="wait" custom={direction} initial={false}>
+        <AnimatePresence mode="popLayout" custom={direction} initial={false}>
           <motion.div
             key={product.id}
             custom={direction}
