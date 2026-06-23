@@ -654,3 +654,46 @@ div[style*="z-index:2147483647"] {
   animation: liquid-shared-drain-flow 15s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite !important;
   transform-origin: bottom center;
 }
+
+/* ==================== TRANSISÃO DE CORES PREMIUM HOUDINI ==================== */
+@property --blue-300 {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #e2e8f0;
+}
+@property --blue-400 {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #cbd5e1;
+}
+@property --blue-500 {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #94a3b8;
+}
+@property --indigo-300 {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #f1f5f9;
+}
+@property --violet-200 {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #ffffff;
+}
+@property --liquid-color {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+@property --accent-color {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+.transition-bg,
+.transition-bg *,
+.transition-liquid-vars {
+  transition: --blue-300 0.8s ease, --blue-400 0.8s ease, --blue-500 0.8s ease, --indigo-300 0.8s ease, --violet-200 0.8s ease, --liquid-color 0.8s ease, --accent-color 0.8s ease !important;
+}

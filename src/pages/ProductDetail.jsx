@@ -209,32 +209,61 @@ function SpecRow({ label, value }) {
 
 const bottleVariants = {
   enter: (dir) => ({
-    rotateY: dir > 0 ? 90 : -90,
+    x: dir > 0 ? 120 : -120,
+    rotateY: dir > 0 ? 35 : -35,
+    rotateZ: dir > 0 ? 10 : -10,
     opacity: 0,
-    scale: 0.95
+    scale: 0.9
   }),
   center: {
+    x: 0,
     rotateY: 0,
+    rotateZ: 0,
     opacity: 1,
     scale: 1,
     transition: {
-      duration: 0.45,
-      ease: [0.33, 0.66, 0.66, 1], // easeOutCubic
-      rotateY: { duration: 0.45 },
-      opacity: { duration: 0.35, delay: 0.1 },
-      scale: { duration: 0.45 }
+      x: { type: "spring", stiffness: 300, damping: 28 },
+      rotateZ: { type: "spring", stiffness: 220, damping: 20 },
+      rotateY: { duration: 0.4, ease: "easeOut" },
+      opacity: { duration: 0.3 },
+      scale: { duration: 0.4, ease: "easeOut" }
     }
   },
   exit: (dir) => ({
-    rotateY: dir > 0 ? -90 : 90,
+    x: dir > 0 ? -120 : 120,
+    rotateY: dir > 0 ? -35 : 35,
+    rotateZ: dir > 0 ? -10 : 10,
     opacity: 0,
-    scale: 0.95,
+    scale: 0.9,
     transition: {
-      duration: 0.45,
-      ease: [0.32, 0, 0.67, 0], // easeInCubic
-      rotateY: { duration: 0.45 },
-      opacity: { duration: 0.35, delay: 0.05 },
-      scale: { duration: 0.45 }
+      x: { duration: 0.35, ease: "easeIn" },
+      rotateZ: { duration: 0.35, ease: "easeIn" },
+      rotateY: { duration: 0.35, ease: "easeIn" },
+      opacity: { duration: 0.25 },
+      scale: { duration: 0.35, ease: "easeIn" }
+    }
+  })
+};
+
+const textVariants = {
+  enter: (dir) => ({
+    x: dir > 0 ? 60 : -60,
+    opacity: 0
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      x: { type: "spring", stiffness: 260, damping: 26 },
+      opacity: { duration: 0.3 }
+    }
+  },
+  exit: (dir) => ({
+    x: dir > 0 ? -60 : 60,
+    opacity: 0,
+    transition: {
+      x: { duration: 0.25, ease: "easeIn" },
+      opacity: { duration: 0.2 }
     }
   })
 };
@@ -758,10 +787,10 @@ export default function ProductDetail() {
         <svg width="320" height="84" viewBox="0 0 320 84" overflow="visible" aria-hidden="true">
           <defs>
             <linearGradient id="pdOrbitGrad" x1="0%" y1="100%" x2="0%" y2="0%">
-              <stop offset="0%" stopColor={liquidColor} stopOpacity="1" />
-              <stop offset="30%" stopColor={liquidColor} stopOpacity="0.6" />
-              <stop offset="60%" stopColor={liquidColor} stopOpacity="0.1" />
-              <stop offset="100%" stopColor={liquidColor} stopOpacity="0" />
+              <stop offset="0%" stopColor="var(--liquid-color)" stopOpacity="1" />
+              <stop offset="30%" stopColor="var(--liquid-color)" stopOpacity="0.6" />
+              <stop offset="60%" stopColor="var(--liquid-color)" stopOpacity="0.1" />
+              <stop offset="100%" stopColor="var(--liquid-color)" stopOpacity="0" />
             </linearGradient>
             <filter id="pdOrbitGlow" x="-20%" y="-60%" width="140%" height="220%">
               <feGaussianBlur stdDeviation="2" result="blur" />
@@ -775,7 +804,13 @@ export default function ProductDetail() {
   }
 
   return (
-    <div className="min-h-screen overflow-y-auto overflow-x-hidden selection:bg-amber-100 font-inter relative rounded-none border-none bg-[#F8F9FA]">
+    <div 
+      className="min-h-screen overflow-y-auto overflow-x-hidden selection:bg-amber-100 font-inter relative rounded-none border-none bg-[#F8F9FA] transition-bg"
+      style={{
+        "--liquid-color": liquidColor,
+        "--accent-color": accentColor
+      }}
+    >
       <AuroraBackground
         showRadialGradient={true}
         colors={{
@@ -785,7 +820,7 @@ export default function ProductDetail() {
           color4: `${liquidColor}33`,
           color5: `${liquidColor}44`,
         }}
-        className="absolute top-[-150px] left-0 w-full h-[750px] overflow-hidden z-0 rounded-none border-none"
+        className="absolute top-[-150px] left-0 w-full h-[750px] overflow-hidden z-0 rounded-none border-none transition-bg"
       >
         <div />
       </AuroraBackground>
@@ -1099,8 +1134,8 @@ export default function ProductDetail() {
                         left: 0,
                         width: "100%",
                         height: `${fillH}%`,
-                        background: `linear-gradient(90deg, rgba(255,255,255,0.2) 0%, transparent 40%, rgba(0,0,0,0.1) 100%), linear-gradient(180deg, ${liquidColor} 0%, ${liquidColor}CC 100%)`,
-                        boxShadow: `0 0 8px ${liquidColor}66`,
+                        background: `linear-gradient(90deg, rgba(255,255,255,0.2) 0%, transparent 40%, rgba(0,0,0,0.1) 100%), linear-gradient(180deg, var(--liquid-color) 0%, var(--liquid-color)CC 100%)`,
+                        boxShadow: `0 0 8px var(--liquid-color)66`,
                         transition: "height 0.5s ease-out"
                       }} />
                     </div>
@@ -1111,7 +1146,7 @@ export default function ProductDetail() {
                         <span style={{ fontSize: "28px", fontWeight: "300", letterSpacing: "-0.04em", color: "#111827", lineHeight: 1 }}>
                           {pct}
                         </span>
-                        <span style={{ fontSize: "14px", fontWeight: "600", color: liquidColor }}>%</span>
+                        <span style={{ fontSize: "14px", fontWeight: "600", color: "var(--liquid-color)" }}>%</span>
                       </div>
                       
                       <div style={{ width: "100%", height: "1px", background: "rgba(0,0,0,0.06)", margin: "4px 0" }} />
@@ -1181,186 +1216,198 @@ export default function ProductDetail() {
         </button>
 
         {/* Status Badge dentro do card */}
-        {!product.is_opened && (
-          <div className="flex justify-center -mt-2 mb-2">
-            <StatusBadge text="PRODUTO FECHADO" />
-          </div>
-        )}
-
-        {/* Product Identity — Centralizado */}
-        <motion.div variants={fadeUpItem} className="text-center flex flex-col items-center gap-2">
-          {/* Pre-title Context */}
-          <div className="flex items-center gap-3 opacity-40">
-            <div className="h-[0.5px] w-4 bg-foreground" />
-            <span className="text-[10px] tracking-[0.3em] uppercase font-bold text-foreground font-outfit">
-              {product.category === "Bitter/Aperitivo" ? "APERITIVO" : 
-               product.category === "Cognac/Brandy" ? "CONHAQUE" : 
-               product.category} {product.country ? `• ${product.country}` : ''}
-            </span>
-            <div className="h-[0.5px] w-4 bg-foreground" />
-          </div>
-
-          <h1 className="text-2xl md:text-3xl tracking-tight font-extrabold text-[#111827] leading-[1.2] font-outfit max-w-[90%] mx-auto antialiased">
-            {product.name}
-          </h1>
-        </motion.div>
-
-        {/* Price Section — Centralizada com Badge de Desconto à Direita */}
-        <motion.div variants={fadeUpItem} className="flex flex-col items-center gap-1 mt-1">
-          <div className="flex items-center gap-3 justify-center">
-            <span className="text-4xl font-extrabold tracking-tight text-[#111827] flex items-baseline font-outfit" aria-label={`Preço: R$ ${finalPrice?.toFixed(2)}`}>
-              <span className="text-lg font-bold text-[#111827]/40 uppercase tracking-[0.1em] font-outfit mr-1.5">R$</span>
-              {Math.floor(finalPrice)}
-              <span className="text-2xl font-semibold opacity-60 ml-0.5">,{(finalPrice % 1).toFixed(2).split('.')[1]}</span>
-            </span>
-
-            {product.is_opened && discount > 0 && (
-              <span 
-                className="bg-black text-white text-[10px] font-black tracking-[0.1em] px-2.5 py-1 rounded-full uppercase font-outfit"
-                aria-label={`Desconto de ${discount}%`}
-              >
-                -{discount}%
-              </span>
-            )}
-          </div>
-
-          {product.is_opened && discount > 0 && (
-            <span className="text-[11px] text-zinc-400 line-through font-medium tracking-wider uppercase font-outfit" aria-label={`Preço original: R$ ${product.price?.toFixed(2)}`}>
-              DE R$ {product.price?.toFixed(2)}
-            </span>
-          )}
-
-          {pricing?.isFloorActive && !pricing?.isCritical && (
-            <div className="mt-1.5 px-3 py-1 rounded-full bg-amber-500/5 border border-amber-500/10">
-              <span className="text-[9px] font-bold tracking-[0.15em] uppercase text-amber-600 font-outfit">
-                Preço Mínimo
-              </span>
-            </div>
-          )}
-
-          {pricing?.isCritical && (
-            <div className="mt-1.5 px-3 py-1 rounded-full bg-red-600/5 border border-red-600/10">
-              <span className="text-[9px] font-bold tracking-[0.15em] uppercase text-red-600 font-outfit">
-                Dose Final
-              </span>
-            </div>
-          )}
-        </motion.div>
-
-        {/* Description */}
-        {product.description && (
-          <motion.div variants={fadeUpItem} className="px-2">
-            <p className="font-sans font-light text-[14px] text-zinc-600 leading-[1.6] text-center antialiased text-pretty">
-              {product.description}
-            </p>
-          </motion.div>
-        )}
-
-        {/* Perfil Sensorial */}
-        {product.sensory_profile?.length > 0 && (
-          <motion.div variants={fadeUpItem} className="w-full mt-2">
-            <div className="bg-zinc-50 border border-zinc-100 rounded-[2.5rem] p-6">
-              <h3 className="text-sm font-bold text-[#111827] uppercase tracking-[0.15em] text-center mb-5 font-outfit">
-                Perfil Sensorial
-              </h3>
-
-              <motion.div 
-                variants={chipContainer}
-                initial="hidden"
-                animate="show"
-                className="grid grid-cols-2 gap-2.5 max-w-[320px] mx-auto"
-              >
-                {product.sensory_profile.map((p) => (
-                  <motion.div
-                    key={p}
-                    variants={chipItem}
-                    whileHover={{ scale: 1.03, y: -1 }}
-                    whileTap={{ scale: 0.96 }}
-                    className="flex items-center px-3 py-2.5 bg-white border border-zinc-100 rounded-xl gap-2 shadow-[0_2px_8px_rgba(0,0,0,0.02)] transition-all cursor-default"
-                    role="listitem"
-                  >
-                    {/* Indicador de intensidade líquida pulsante */}
-                    <span className="relative flex h-1.5 w-1.5 mr-0.5 flex-shrink-0">
-                      <span 
-                        className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
-                        style={{ backgroundColor: liquidColor }}
-                      />
-                      <span 
-                        className="relative inline-flex rounded-full h-1.5 w-1.5"
-                        style={{ backgroundColor: liquidColor }}
-                      />
-                    </span>
-
-                    <span style={{ color: liquidColor }} className="flex-shrink-0 scale-90 opacity-90">
-                      {sensoryIcons[p] || (
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4" aria-hidden="true">
-                          <circle cx="12" cy="12" r="3" />
-                        </svg>
-                      )}
-                    </span>
-
-                    <span className="text-[10px] tracking-[0.12em] uppercase font-bold font-outfit text-zinc-700 truncate">
-                      {p}
-                    </span>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </div>
-          </motion.div>
-        )}
-
-        {/* Ritual de Serviço no Rodapé */}
-        {(product.suggested_use || product.pairing || product.abv) && (
-          <motion.div variants={fadeUpItem} className="w-full">
-            <div className="bg-zinc-50 border border-zinc-100 rounded-[2.5rem] p-6">
-              <h3 className="text-sm font-bold text-[#111827] uppercase tracking-[0.15em] text-center mb-5 font-outfit">
-                Recomendação do Bartender
-              </h3>
-
-              <div className="flex flex-col gap-0.5 px-1">
-                {product.suggested_use && (
-                  <SpecRow 
-                    label="Sugestão" 
-                    value={
-                      <GooeyText 
-                        texts={product.suggested_use.split("·").map(part => {
-                          let clean = part.trim().replace(/^\d+\.\s*/, "");
-                          return cleanAndShorten(clean.split("(")[0]);
-                        })}
-                        className="w-[160px] min-[380px]:w-[180px] sm:w-[220px]"
-                        textClassName="text-[12px] tracking-[0.05em] uppercase text-foreground font-semibold font-outfit"
-                      />
-                    } 
-                  />
-                )}
-                {product.pairing && (
-                  <SpecRow 
-                    label="Combina com" 
-                    value={
-                      <GooeyText 
-                        texts={product.pairing.split("·").map(part => cleanAndShorten(part))}
-                        className="w-[160px] min-[380px]:w-[180px] sm:w-[220px]"
-                        textClassName="text-[12px] tracking-[0.05em] uppercase text-foreground font-semibold font-outfit"
-                      />
-                    } 
-                  />
-                )}
-                <SpecRow label="ABV" value={product.abv} />
-              </div>
-            </div>
-          </motion.div>
-        )}
-
-        {/* CTA — Reservar */}
-        <motion.div variants={fadeUpItem} className="w-full mt-4">
-          <button
-            onClick={handleAdd}
-            className="w-full py-4 bg-black text-white rounded-full font-semibold text-sm tracking-[0.15em] uppercase hover:opacity-90 active:scale-[0.98] transition-all duration-150 shadow-md flex items-center justify-center gap-2 font-outfit"
-            aria-label={`Solicitar reserva de ${product.name}`}
+        <AnimatePresence mode="wait" custom={direction} initial={false}>
+          <motion.div
+            key={product.id}
+            custom={direction}
+            variants={textVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            className="flex flex-col gap-6 w-full"
           >
-            Reservar por R$ {finalPrice.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
-          </button>
-        </motion.div>
+            {!product.is_opened && (
+              <div className="flex justify-center -mt-2 mb-2">
+                <StatusBadge text="PRODUTO FECHADO" />
+              </div>
+            )}
+
+            {/* Product Identity — Centralizado */}
+            <div className="text-center flex flex-col items-center gap-2">
+              {/* Pre-title Context */}
+              <div className="flex items-center gap-3 opacity-40">
+                <div className="h-[0.5px] w-4 bg-foreground" />
+                <span className="text-[10px] tracking-[0.3em] uppercase font-bold text-foreground font-outfit">
+                  {product.category === "Bitter/Aperitivo" ? "APERITIVO" : 
+                   product.category === "Cognac/Brandy" ? "CONHAQUE" : 
+                   product.category} {product.country ? `• ${product.country}` : ''}
+                </span>
+                <div className="h-[0.5px] w-4 bg-foreground" />
+              </div>
+
+              <h1 className="text-2xl md:text-3xl tracking-tight font-extrabold text-[#111827] leading-[1.2] font-outfit max-w-[90%] mx-auto antialiased">
+                {product.name}
+              </h1>
+            </div>
+
+            {/* Price Section — Centralizada com Badge de Desconto à Direita */}
+            <div className="flex flex-col items-center gap-1 mt-1">
+              <div className="flex items-center gap-3 justify-center">
+                <span className="text-4xl font-extrabold tracking-tight text-[#111827] flex items-baseline font-outfit" aria-label={`Preço: R$ ${finalPrice?.toFixed(2)}`}>
+                  <span className="text-lg font-bold text-[#111827]/40 uppercase tracking-[0.1em] font-outfit mr-1.5">R$</span>
+                  {Math.floor(finalPrice)}
+                  <span className="text-2xl font-semibold opacity-60 ml-0.5">,{(finalPrice % 1).toFixed(2).split('.')[1]}</span>
+                </span>
+
+                {product.is_opened && discount > 0 && (
+                  <span 
+                    className="bg-black text-white text-[10px] font-black tracking-[0.1em] px-2.5 py-1 rounded-full uppercase font-outfit"
+                    aria-label={`Desconto de ${discount}%`}
+                  >
+                    -{discount}%
+                  </span>
+                )}
+              </div>
+
+              {product.is_opened && discount > 0 && (
+                <span className="text-[11px] text-zinc-400 line-through font-medium tracking-wider uppercase font-outfit" aria-label={`Preço original: R$ ${product.price?.toFixed(2)}`}>
+                  DE R$ {product.price?.toFixed(2)}
+                </span>
+              )}
+
+              {pricing?.isFloorActive && !pricing?.isCritical && (
+                <div className="mt-1.5 px-3 py-1 rounded-full bg-amber-500/5 border border-amber-500/10">
+                  <span className="text-[9px] font-bold tracking-[0.15em] uppercase text-amber-600 font-outfit">
+                    Preço Mínimo
+                  </span>
+                </div>
+              )}
+
+              {pricing?.isCritical && (
+                <div className="mt-1.5 px-3 py-1 rounded-full bg-red-600/5 border border-red-600/10">
+                  <span className="text-[9px] font-bold tracking-[0.15em] uppercase text-red-600 font-outfit">
+                    Dose Final
+                  </span>
+                </div>
+              )}
+            </div>
+
+            {/* Description */}
+            {product.description && (
+              <div className="px-2">
+                <p className="font-sans font-light text-[14px] text-zinc-600 leading-[1.6] text-center antialiased text-pretty">
+                  {product.description}
+                </p>
+              </div>
+            )}
+
+            {/* Perfil Sensorial */}
+            {product.sensory_profile?.length > 0 && (
+              <div className="w-full mt-2">
+                <div className="bg-zinc-50 border border-zinc-100 rounded-[2.5rem] p-6">
+                  <h3 className="text-sm font-bold text-[#111827] uppercase tracking-[0.15em] text-center mb-5 font-outfit">
+                    Perfil Sensorial
+                  </h3>
+
+                  <motion.div 
+                    variants={chipContainer}
+                    initial="hidden"
+                    animate="show"
+                    className="grid grid-cols-2 gap-2.5 max-w-[320px] mx-auto"
+                  >
+                    {product.sensory_profile.map((p) => (
+                      <motion.div
+                        key={p}
+                        variants={chipItem}
+                        whileHover={{ scale: 1.03, y: -1 }}
+                        whileTap={{ scale: 0.96 }}
+                        className="flex items-center px-3 py-2.5 bg-white border border-zinc-100 rounded-xl gap-2 shadow-[0_2px_8px_rgba(0,0,0,0.02)] transition-all cursor-default"
+                        role="listitem"
+                      >
+                        {/* Indicador de intensidade líquida pulsante */}
+                        <span className="relative flex h-1.5 w-1.5 mr-0.5 flex-shrink-0">
+                          <span 
+                            className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
+                            style={{ backgroundColor: "var(--liquid-color)" }}
+                          />
+                          <span 
+                            className="relative inline-flex rounded-full h-1.5 w-1.5"
+                            style={{ backgroundColor: "var(--liquid-color)" }}
+                          />
+                        </span>
+
+                        <span style={{ color: "var(--liquid-color)" }} className="flex-shrink-0 scale-90 opacity-90">
+                          {sensoryIcons[p] || (
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4" aria-hidden="true">
+                              <circle cx="12" cy="12" r="3" />
+                            </svg>
+                          )}
+                        </span>
+
+                        <span className="text-[10px] tracking-[0.12em] uppercase font-bold font-outfit text-zinc-700 truncate">
+                          {p}
+                        </span>
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                </div>
+              </div>
+            )}
+
+            {/* Ritual de Serviço no Rodapé */}
+            {(product.suggested_use || product.pairing || product.abv) && (
+              <div className="w-full">
+                <div className="bg-zinc-50 border border-zinc-100 rounded-[2.5rem] p-6">
+                  <h3 className="text-sm font-bold text-[#111827] uppercase tracking-[0.15em] text-center mb-5 font-outfit">
+                    Recomendação do Bartender
+                  </h3>
+
+                  <div className="flex flex-col gap-0.5 px-1">
+                    {product.suggested_use && (
+                      <SpecRow 
+                        label="Sugestão" 
+                        value={
+                          <GooeyText 
+                            texts={product.suggested_use.split("·").map(part => {
+                              let clean = part.trim().replace(/^\d+\.\s*/, "");
+                              return cleanAndShorten(clean.split("(")[0]);
+                            })}
+                            className="w-[160px] min-[380px]:w-[180px] sm:w-[220px]"
+                            textClassName="text-[12px] tracking-[0.05em] uppercase text-foreground font-semibold font-outfit"
+                          />
+                        } 
+                      />
+                    )}
+                    {product.pairing && (
+                      <SpecRow 
+                        label="Combina com" 
+                        value={
+                          <GooeyText 
+                            texts={product.pairing.split("·").map(part => cleanAndShorten(part))}
+                            className="w-[160px] min-[380px]:w-[180px] sm:w-[220px]"
+                            textClassName="text-[12px] tracking-[0.05em] uppercase text-foreground font-semibold font-outfit"
+                          />
+                        } 
+                      />
+                    )}
+                    <SpecRow label="ABV" value={product.abv} />
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* CTA — Reservar */}
+            <div className="w-full mt-4">
+              <button
+                onClick={handleAdd}
+                className="w-full py-4 bg-black text-white rounded-full font-semibold text-sm tracking-[0.15em] uppercase hover:opacity-90 active:scale-[0.98] transition-all duration-150 shadow-md flex items-center justify-center gap-2 font-outfit"
+                aria-label={`Solicitar reserva de ${product.name}`}
+              >
+                Reservar por R$ {finalPrice.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+              </button>
+            </div>
+          </motion.div>
+        </AnimatePresence>
 
       </motion.div>
     </div>
