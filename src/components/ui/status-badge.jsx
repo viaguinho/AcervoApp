@@ -64,20 +64,22 @@ export const StatusBadge = ({ text = "PRODUTO FECHADO" }) => {
       const { beta, gamma } = event;
       if (beta !== null && gamma !== null) {
         // Mapeia a inclinação direcional (eixos beta e gamma) para a rotação holográfica
-        const angle = (gamma || 0) * 2.2 + (beta || 0) * 0.8;
+        const angle = (gamma || 0) * 3 + (beta || 0) * 3;
         setFirstOverlayPosition(angle);
         setDisableOverlayAnimation(true);
-        setDisableInOutOverlayAnimation(false);
+        // Desativa a transição CSS (disableInOutOverlayAnimation = true) 
+        // para que a atualização a 60fps do giroscópio seja imediata e fluida.
+        setDisableInOutOverlayAnimation(true);
       }
     };
 
     const initGyro = async () => {
       if (
         typeof DeviceOrientationEvent !== "undefined" &&
-        typeof DeviceOrientationEvent.requestPermission === "function"
+        typeof DeviceOrientationEvent["requestPermission"] === "function"
       ) {
         try {
-          const response = await DeviceOrientationEvent.requestPermission();
+          const response = await DeviceOrientationEvent["requestPermission"]();
           if (response === "granted") {
             window.addEventListener("deviceorientation", handleOrientation);
             window.removeEventListener("click", initGyro);

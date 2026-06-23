@@ -806,10 +806,10 @@ export default function ProductDetail() {
   return (
     <div 
       className="min-h-screen overflow-y-auto overflow-x-hidden selection:bg-amber-100 font-inter relative rounded-none border-none bg-[#F8F9FA] transition-bg"
-      style={{
+      style={/** @type {any} */ ({
         "--liquid-color": liquidColor,
         "--accent-color": accentColor
-      }}
+      })}
     >
       <AuroraBackground
         showRadialGradient={true}
@@ -930,8 +930,9 @@ export default function ProductDetail() {
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     backgroundClip: "text",
+                    color: "transparent",
                     pointerEvents: "none",
-                    display: "block"
+                    display: "inline-block"
                   };
                 })()}
               >
@@ -1201,13 +1202,7 @@ export default function ProductDetail() {
       </div>
 
       {/* ── CARD INFERIOR SOBREPOSTO ── */}
-      <motion.div 
-        layout
-        className="bg-white rounded-t-[40px] shadow-[0_-12px_40px_rgba(0,0,0,0.04)] border-t border-black/[0.02] relative z-20 mt-12 max-w-lg mx-auto"
-        variants={staggerContainer}
-        initial="hidden"
-        animate="show"
-      >
+      <div className="relative z-20 mt-12 max-w-lg mx-auto">
         {/* Botão de adicionar à sacola flutuante */}
         <button
           onClick={handleAdd}
@@ -1216,6 +1211,14 @@ export default function ProductDetail() {
         >
           <ShoppingBag className="w-5 h-5" strokeWidth={1.8} />
         </button>
+
+        <motion.div 
+          layout
+          className="bg-white rounded-t-[40px] shadow-[0_-12px_40px_rgba(0,0,0,0.04)] border-t border-black/[0.02] w-full"
+          variants={staggerContainer}
+          initial="hidden"
+          animate="show"
+        >
 
         {/* Wrapper com overflow-hidden para conter o slide dos textos sem cortar o botão flutuante */}
         <div className="w-full overflow-hidden rounded-t-[40px] px-6 pb-16 pt-12 flex flex-col gap-6">
@@ -1399,23 +1402,23 @@ export default function ProductDetail() {
                 </div>
               </div>
             )}
-
-            {/* CTA — Reservar */}
-            <div className="w-full mt-4">
-              <button
-                onClick={handleAdd}
-                className="w-full py-4 bg-black text-white rounded-full font-semibold text-sm tracking-[0.15em] uppercase hover:opacity-90 active:scale-[0.98] transition-all duration-150 shadow-md flex items-center justify-center gap-2 font-outfit"
-                aria-label={`Solicitar reserva de ${product.name}`}
-              >
-                Reservar por R$ {finalPrice.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
-              </button>
-            </div>
           </motion.div>
         </AnimatePresence>
-        </div>
+      </div>
 
-      </motion.div>
-    </div>
-    </div>
+      {/* CTA — Reservar fora do overflow-hidden para evitar clipping */}
+      <div className="px-6 pb-8">
+        <button
+          onClick={handleAdd}
+          className="w-full py-4 bg-black text-white rounded-full font-semibold text-sm tracking-[0.15em] uppercase hover:opacity-90 active:scale-[0.98] transition-all duration-150 shadow-md flex items-center justify-center gap-2 font-outfit"
+          aria-label={`Solicitar reserva de ${product.name}`}
+        >
+          Reservar por R$ {finalPrice.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+        </button>
+      </div>
+    </motion.div>
+  </div>
+  </div>
+  </div>
   );
 }
