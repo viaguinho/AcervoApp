@@ -14,7 +14,7 @@ import catalogoLocal from "@/data/catalogo-acervo.json";
 export default function Home() {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const userName = user?.name || user?.email?.split("@")[0] || "Visitante";
+  const userName = user?.name || user?.email?.split("@")[0] || "Membro";
   // Mapeamento de normalização para chaves de categoria
   const normalizeCategory = (name) => {
     if (!name) return "";
