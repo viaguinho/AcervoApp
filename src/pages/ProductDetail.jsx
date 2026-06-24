@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/apiClient";
 import { motion, AnimatePresence } from "framer-motion";
 import { addToBag } from "@/lib/bagStore";
 import { toast } from "sonner";
@@ -608,7 +608,7 @@ export default function ProductDetail() {
 
   // Verifica se o usuário é admin
   useEffect(() => {
-    base44.auth.me().then(u => { if (u?.role === "admin") setIsAdmin(true); }).catch(() => {});
+    api.auth.me().then(u => { if (u?.role === "admin") setIsAdmin(true); }).catch(() => {});
   }, []);
 
   useEffect(() => {
@@ -619,7 +619,7 @@ export default function ProductDetail() {
 
     async function load() {
       // @ts-ignore
-      const products = await base44.entities.Product.filter({ id });
+      const products = await api.entities.Product.filter({ id });
       if (products.length > 0) {
         const prod = products[0];
         if (prod.category === "Cachaca") prod.category = "Cachaça";
@@ -642,7 +642,7 @@ export default function ProductDetail() {
       // Carrega todo o catálogo se não houver produtos no estado
       if (allProductsState.length === 0) {
         // @ts-ignore
-        const all = await base44.entities.Product.filter();
+        const all = await api.entities.Product.filter();
         const validProducts = all.filter(p => p.id !== "_CATEGORY_CONFIG_" && p.name !== "_CATEGORY_CONFIG_" && p.category !== "_CONFIG_").map(p => {
           if (p.category === "Cachaca") p.category = "Cachaça";
           if (p.name === "Goldwasser Danzig 22 Karat") p.category = "Licor";

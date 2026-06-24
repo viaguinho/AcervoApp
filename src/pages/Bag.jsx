@@ -7,7 +7,7 @@ import { getFinalPrice } from "@/lib/openedBottle";
 import BagItem from "../components/BagItem";
 import { HolographicButton } from "../components/HolographicButton";
 import { GlassButton } from "@/components/ui/apple-tahoe-liquid-glass-button";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/apiClient";
 
 export default function Bag() {
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ export default function Bag() {
     window.addEventListener("bag-updated", refresh);
 
     // Carrega o número do WhatsApp das configurações globais
-    base44.entities.Product.filter({ name: "_CATEGORY_CONFIG_" }).then(results => {
+    api.entities.Product.filter({ name: "_CATEGORY_CONFIG_" }).then(results => {
       if (results.length > 0 && results[0].description) {
         try {
           const cfg = JSON.parse(results[0].description);

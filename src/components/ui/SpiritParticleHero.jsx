@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { base44 } from '@/api/base44Client';
+import { api } from '@/api/apiClient';
 import HolographicButton from '../HolographicButton';
 
 const TOTAL_PARTICLES = 160;
@@ -32,7 +32,7 @@ export default function SpiritParticleHero({ onEnterApp }) {
   useEffect(() => {
     async function loadBottles() {
       try {
-        const products = await base44.entities.Product.list();
+        const products = await api.entities.Product.list();
         let validProducts = products.filter(p => p.imageUrl || p.image_url);
         let images = validProducts.map(p => p.imageUrl || p.image_url).slice(0, MAX_BOTTLES);
         

@@ -14,7 +14,7 @@ const getAppParamValue = (paramName, { defaultValue = undefined, removeFromUrl =
 	if (isNode) {
 		return defaultValue;
 	}
-	const storageKey = `base44_${toSnakeCase(paramName)}`;
+	const storageKey = `acervo_${toSnakeCase(paramName)}`;
 	const urlParams = new URLSearchParams(window.location.search);
 	const searchParam = urlParams.get(paramName);
 	if (removeFromUrl) {
@@ -40,18 +40,18 @@ const getAppParamValue = (paramName, { defaultValue = undefined, removeFromUrl =
 
 const getAppParams = () => {
 	if (getAppParamValue("clear_access_token") === 'true') {
-		storage.removeItem('base44_access_token');
+		storage.removeItem('acervo_access_token');
 		storage.removeItem('token');
 	}
 	return {
 		// @ts-ignore
-		appId: import.meta.env.VITE_BASE44_APP_ID,
+		appId: import.meta.env.VITE_API_APP_ID || import.meta.env.VITE_BASE44_APP_ID,
 		token: getAppParamValue("access_token", { removeFromUrl: true }),
 		fromUrl: window.location.href,
 		// @ts-ignore
-		functionsVersion: import.meta.env.VITE_BASE44_FUNCTIONS_VERSION || 'v1',
+		functionsVersion: import.meta.env.VITE_API_FUNCTIONS_VERSION || import.meta.env.VITE_BASE44_FUNCTIONS_VERSION || 'v1',
 		// @ts-ignore
-		appBaseUrl: import.meta.env.VITE_BASE44_APP_BASE_URL,
+		appBaseUrl: import.meta.env.VITE_API_APP_BASE_URL || import.meta.env.VITE_BASE44_APP_BASE_URL,
 	}
 }
 

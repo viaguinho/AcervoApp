@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/apiClient";
 
 const DEFAULTS = {
   drop_x: 94,
@@ -33,7 +33,7 @@ export function useDraggableLayout(productId, isAdmin) {
   useEffect(() => {
     async function load() {
       try {
-        const rows = await base44.entities.ProductUILayout.filter({ is_global_default: true });
+        const rows = await api.entities.ProductUILayout.filter({ is_global_default: true });
         if (rows.length > 0) {
           const r = rows[0];
           setGlobalLayoutId(r.id);
@@ -59,12 +59,12 @@ export function useDraggableLayout(productId, isAdmin) {
     saveTimeoutRef.current = setTimeout(async () => {
       try {
         if (globalLayoutId) {
-          await base44.entities.ProductUILayout.update(globalLayoutId, {
+          await api.entities.ProductUILayout.update(globalLayoutId, {
             ...newLayout,
             is_global_default: true,
           });
         } else {
-          const created = await base44.entities.ProductUILayout.create({
+          const created = await api.entities.ProductUILayout.create({
             ...newLayout,
             is_global_default: true,
           });

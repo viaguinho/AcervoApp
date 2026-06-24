@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/apiClient";
 import { X, SlidersHorizontal } from "lucide-react";
 import ProductGrid from "../components/ProductGrid";
 import ProductFilters from "../components/ProductFilters";
@@ -47,7 +47,7 @@ export default function Catalog() {
   useEffect(() => {
     async function load() {
       try {
-        const data = await base44.entities.Product.list("-created_date", 500);
+        const data = await api.entities.Product.list("-created_date", 500);
         const filteredData = data.filter(p => p.id !== "_CATEGORY_CONFIG_" && p.name !== "_CATEGORY_CONFIG_").map(p => {
           if (p.category === "Cachaca") p.category = "Cachaça";
           if (p.name === "Goldwasser Danzig 22 Karat") p.category = "Licor";

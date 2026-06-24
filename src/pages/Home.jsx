@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/apiClient";
 import { Sparkles, Layers } from "lucide-react";
 import { useAuth } from "../lib/AuthContext";
 import { motion, useScroll } from "framer-motion";
@@ -63,13 +63,13 @@ export default function Home() {
     try {
       const jsonStr = JSON.stringify(newConfig);
       // @ts-ignore
-      const configProducts = await base44.entities.Product.filter({ name: "_CATEGORY_CONFIG_" });
+      const configProducts = await api.entities.Product.filter({ name: "_CATEGORY_CONFIG_" });
       if (configProducts.length > 0) {
         // @ts-ignore
-        await base44.entities.Product.update(configProducts[0].id, { description: jsonStr });
+        await api.entities.Product.update(configProducts[0].id, { description: jsonStr });
       } else {
         // @ts-ignore
-        await base44.entities.Product.create({
+        await api.entities.Product.create({
           name: "_CATEGORY_CONFIG_",
           category: "_CONFIG_",
           description: jsonStr,
@@ -86,7 +86,7 @@ export default function Home() {
     async function load() {
       try {
         // @ts-ignore
-        const products = await base44.entities.Product.list("-created_date", 500);
+        const products = await api.entities.Product.list("-created_date", 500);
         products.forEach(p => {
           if (p.category === "Cachaca") p.category = "Cachaça";
           if (p.name === "Goldwasser Danzig 22 Karat") p.category = "Licor";
@@ -143,7 +143,7 @@ export default function Home() {
         
         // Verifica admin
         try {
-          const u = await base44.auth.me();
+          const u = await api.auth.me();
           if (u?.role === "admin") setIsAdmin(true);
         } catch (e) {}
       } catch (error) {
@@ -172,10 +172,10 @@ export default function Home() {
   const handleImageUpload = async (rawCategoryName, file) => {
     const normalizedKey = normalizeCategory(rawCategoryName);
     
-    // Tenta fazer o upload via base44
+    // Tenta fazer o upload via API
     try {
       // @ts-ignore
-      const { file_url } = await base44.integrations.Core.UploadFile({ file });
+      const { file_url } = await api.integrations.Core.UploadFile({ file });
       if (file_url) {
         setConfig(prev => {
           const newConfig = {

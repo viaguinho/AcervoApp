@@ -23,7 +23,7 @@ export default function ProductCard({ product, index, variant = "solid", hideSta
     const img = e.currentTarget;
     if (!img || !product.image_url) return;
 
-    // Criar uma imagem temporária para analisar via Canvas (CORS é suportado pelo base44.app)
+    // Criar uma imagem temporária para analisar via Canvas (CORS é suportado pelo servidor/API)
     const tempImg = new Image();
     tempImg.crossOrigin = "anonymous";
     tempImg.src = product.image_url;

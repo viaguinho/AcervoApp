@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { base44 } from "@/api/base44Client"
+import { api } from "@/api/apiClient"
 import { GlassButton } from "@/components/ui/apple-tahoe-liquid-glass-button"
 
 export const WaitlistHero = ({ onEnterApp }) => {
@@ -13,7 +13,7 @@ export const WaitlistHero = ({ onEnterApp }) => {
   useEffect(() => {
     async function loadImages() {
       try {
-        const products = await base44.entities.Product.list()
+        const products = await api.entities.Product.list()
         const images = products
           .filter(p => p.image_url || p.imageUrl)
           .map(p => p.image_url || p.imageUrl)

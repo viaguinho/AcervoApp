@@ -11,10 +11,10 @@ try {
   const lines = envContent.split('\n');
   for (const line of lines) {
     const parts = line.split('=');
-    if (parts[0] && parts[0].trim() === 'VITE_BASE44_APP_ID') {
+    if (parts[0] && parts[0].trim() === 'VITE_API_APP_ID') {
       appId = parts[1].trim();
     }
-    if (parts[0] && parts[0].trim() === 'VITE_BASE44_APP_BASE_URL') {
+    if (parts[0] && parts[0].trim() === 'VITE_API_APP_BASE_URL') {
       appBaseUrl = parts[1].trim();
     }
   }
@@ -22,12 +22,12 @@ try {
   console.log("Aviso: Não foi possível ler o arquivo .env.local, usando valores padrão.");
 }
 
-console.log("Configurando cliente Base44...");
+console.log("Configurando cliente de API...");
 console.log("App ID:", appId);
 console.log("Base URL / Server URL:", appBaseUrl);
 
 // Definimos serverUrl como o appBaseUrl para que o Node.js resolva a URL absoluta
-const base44 = createClient({
+const api = createClient({
   appId,
   serverUrl: appBaseUrl,
   requiresAuth: false,
@@ -42,21 +42,21 @@ async function importar() {
     console.log(`Lendo ${produtos.length} produtos do catálogo local...`);
     
     console.log("Buscando produtos existentes no banco...");
-    const backendProducts = await base44.entities.Product.list("-created_date", 500);
+    const backendProducts = await api.entities.Product.list("-created_date", 500);
     console.log(`Encontrados ${backendProducts.length} produtos existentes.`);
     
     let criados = 0;
     let atualizados = 0;
-
+ 
     for (const prod of produtos) {
       const match = backendProducts.find(p => p.name === prod.name);
       if (match) {
         // Atualiza
-        await base44.entities.Product.update(match.id, prod);
+        await api.entities.Product.update(match.id, prod);
         atualizados++;
       } else {
         // Cria
-        await base44.entities.Product.create(prod);
+        await api.entities.Product.create(prod);
         criados++;
       }
     }

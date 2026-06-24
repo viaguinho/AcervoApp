@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/apiClient";
 import { useAuth } from "@/lib/AuthContext";
 import { Plus, X, Upload, Save, Trash2, RefreshCw } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -118,8 +118,8 @@ function EditModal({ product, onSave, onClose, onDelete }) {
 
   const handleImageUpload = async (file) => {
     setUploadingImage(true);
-    // @ts-ignore — base44.integrations é tipado como {} mas Core existe em runtime
-    const { file_url } = await base44.integrations.Core.UploadFile({ file });
+    // @ts-ignore — api.integrations é tipado como {} mas Core existe em runtime
+    const { file_url } = await api.integrations.Core.UploadFile({ file });
     setForm(f => ({ ...f, image_url: file_url }));
     setUploadingImage(false);
   };
@@ -143,12 +143,12 @@ function EditModal({ product, onSave, onClose, onDelete }) {
     }
 
     if (isNew) {
-      // @ts-ignore — base44.entities é tipado como {} mas Product existe em runtime
-      await base44.entities.Product.create(processedForm);
+      // @ts-ignore — api.entities é tipado como {} mas Product existe em runtime
+      await api.entities.Product.create(processedForm);
       toast.success("Produto criado!");
     } else {
       // @ts-ignore
-      await base44.entities.Product.update(product.id, processedForm);
+      await api.entities.Product.update(product.id, processedForm);
       toast.success("Produto atualizado!");
     }
     setSaving(false);
@@ -158,7 +158,7 @@ function EditModal({ product, onSave, onClose, onDelete }) {
   const handleDelete = async () => {
     if (!confirm(`Excluir "${product.name}"?`)) return;
     // @ts-ignore
-    await base44.entities.Product.delete(product.id);
+    await api.entities.Product.delete(product.id);
     toast.success("Produto excluído");
     onDelete();
   };
@@ -536,17 +536,17 @@ export default function Admin() {
     const toastId = toast.loading("Sincronizando descrições...");
     try {
       // @ts-ignore
-      const backendProducts = await base44.entities.Product.list("-created_date", 500);
+      const backendProducts = await api.entities.Product.list("-created_date", 500);
       let updatedCount = 0;
       for (const localProd of catalogoLocal) {
         const match = backendProducts.find(p => p.name === localProd.name);
         if (match) {
           // @ts-ignore
-          await base44.entities.Product.update(match.id, { description: localProd.description });
+          await api.entities.Product.update(match.id, { description: localProd.description });
           updatedCount++;
         } else {
           // @ts-ignore
-          await base44.entities.Product.create(localProd);
+          await api.entities.Product.create(localProd);
           updatedCount++;
         }
       }
@@ -562,7 +562,7 @@ export default function Admin() {
 
   const loadConfig = async () => {
     // @ts-ignore
-    const results = await base44.entities.Product.filter({ name: "_CATEGORY_CONFIG_" });
+    const results = await api.entities.Product.filter({ name: "_CATEGORY_CONFIG_" });
     if (results.length > 0 && results[0].description) {
       try {
         const cfg = JSON.parse(results[0].description);
@@ -575,7 +575,7 @@ export default function Admin() {
     setSavingWhatsapp(true);
     try {
       // @ts-ignore
-      const results = await base44.entities.Product.filter({ name: "_CATEGORY_CONFIG_" });
+      const results = await api.entities.Product.filter({ name: "_CATEGORY_CONFIG_" });
       let currentCfg = {};
       if (results.length > 0 && results[0].description) {
         try { currentCfg = JSON.parse(results[0].description); } catch (e) {}
@@ -584,10 +584,10 @@ export default function Admin() {
       const jsonStr = JSON.stringify(newCfg);
       if (results.length > 0) {
         // @ts-ignore
-        await base44.entities.Product.update(results[0].id, { description: jsonStr });
+        await api.entities.Product.update(results[0].id, { description: jsonStr });
       } else {
         // @ts-ignore
-        await base44.entities.Product.create({ name: "_CATEGORY_CONFIG_", category: "_CONFIG_", description: jsonStr, price: 0, is_closed: true });
+        await api.entities.Product.create({ name: "_CATEGORY_CONFIG_", category: "_CONFIG_", description: jsonStr, price: 0, is_closed: true });
       }
       setWhatsappNumber(whatsappNumber.replace(/\D/g, ''));
       toast.success("Número do WhatsApp salvo!");
@@ -600,7 +600,7 @@ export default function Admin() {
   const load = async () => {
     setLoading(true);
     // @ts-ignore
-    const data = await base44.entities.Product.list("-updated_date", 500);
+    const data = await api.entities.Product.list("-updated_date", 500);
     setProducts(data);
     setLoading(false);
   };
