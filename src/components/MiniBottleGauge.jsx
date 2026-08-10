@@ -29,8 +29,10 @@ export default function MiniBottleGauge({ product, size = "sm", className = "" }
 
   const { width, height } = dimensions;
 
-  // Gerador de ID único para evitar colisão de clipPaths no mesmo DOM
-  const uniqueId = `bottle-clip-${product.id || Math.random().toString(36).substr(2, 9)}`;
+  // Gerador de ID único sanitizado para evitar colisão de clipPaths no mesmo DOM
+  const rawId = String(product.id || Math.random().toString(36).substring(2));
+  const safeId = rawId.replace(/[^a-zA-Z0-9_-]/g, "_");
+  const uniqueId = `bottle-clip-${safeId}`;
 
   // Cálculo da altura do líquido dentro do gargalo e do corpo da garrafa (viewBox 0 0 30 75)
   // O espaço interno útil vai de y=7 (gargalo topo) a y=68 (base)

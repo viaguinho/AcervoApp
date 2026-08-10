@@ -183,6 +183,19 @@ export function isPriceViable(product) {
 }
 
 /**
+ * Garante que a cor retornada é um código Hex válido (#RRGGBB) para evitar erros de sintaxe CSS com alfa.
+ */
+export function getSafeHexColor(color) {
+  if (!color || typeof color !== "string") return "#B45309";
+  const trimmed = color.trim();
+  if (/^#[0-9A-Fa-f]{6}$/.test(trimmed)) return trimmed;
+  if (/^#[0-9A-Fa-f]{3}$/.test(trimmed)) {
+    return `#${trimmed[1]}${trimmed[1]}${trimmed[2]}${trimmed[2]}${trimmed[3]}${trimmed[3]}`;
+  }
+  return "#B45309";
+}
+
+/**
  * Heurística automática para determinar a cor do líquido baseada no nome ou categoria.
  * Serve como fallback caso a propriedade 'color' não esteja definida no banco.
  */
@@ -190,7 +203,7 @@ export function getLiquidColor(product) {
   if (!product) return "#FBBF24";
 
   // 1. Se já houver uma cor definida no produto, usa ela (Prioridade Máxima)
-  if (product.color) return product.color;
+  if (product.color) return getSafeHexColor(product.color);
 
   const name = product.name?.toLowerCase() || "";
   const category = product.category?.toLowerCase() || "";

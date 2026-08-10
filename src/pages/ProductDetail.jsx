@@ -1146,7 +1146,7 @@ export default function ProductDetail() {
                         borderRadius: fillH >= 95 ? "10px" : "0 0 10px 10px",
                         transition: "height 0.5s ease-out",
                         position: "relative",
-                        boxShadow: `0 0 8px ${liquidColor || "#B45309"}66`
+                        boxShadow: `0 0 8px ${liquidColor ? liquidColor + "66" : "rgba(180, 83, 9, 0.4)"}`
                       }}>
                         {/* Menisco / Linha de Superfície do Líquido */}
                         {fillH > 0 && fillH < 100 && (
