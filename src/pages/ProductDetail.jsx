@@ -1128,17 +1128,12 @@ export default function ProductDetail() {
                       background: "rgba(0,0,0,0.04)",
                       border: "1px solid rgba(0,0,0,0.05)",
                       boxShadow: "inset 0 2px 4px rgba(0,0,0,0.1)",
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "flex-end",
+                      position: "relative",
                       overflow: "hidden"
                     }}>
-                      <div style={{
-                        width: "100%",
-                        height: `${fillH}%`,
-                        minHeight: `${fillH}%`,
-                        backgroundColor: liquidColor
-                      }} />
+                      <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" style={{ position: "absolute", bottom: 0, left: 0 }}>
+                        <rect x="0" y={`${100 - fillH}%`} width="100%" height={`${fillH}%`} fill={liquidColor || "#3F2B22"} />
+                      </svg>
                     </div>
 
                     {/* Dados textuais Brutalistas/Editoriais */}
