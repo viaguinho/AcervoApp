@@ -200,7 +200,7 @@ export function getLiquidColor(product) {
   if (name.includes("aperol") || name.includes("campari") || name.includes("red") || name.includes("vermelho")) return "#EF4444"; // Vermelho Vibrante
   if (name.includes("goldwasser")) return "#FDE047"; // Dourado Suave (folhas de ouro)
   if (name.includes("gold") || name.includes("oro") || name.includes("reposado") || name.includes("añejo")) return "#D97706"; // Ouro Rico
-  if (name.includes("blanco") || name.includes("silver") || name.includes("prata")) return "#E2E8F0"; // Prata / Cristalino
+  if (name.includes("blanco") || name.includes("silver") || name.includes("prata")) return "#0EA5E9"; // Cristalino Aqua / Prata Vibrante
   if (name.includes("absinthe") || name.includes("absinto")) return "#10B981"; // Verde Absinto / Herbal
   if (name.includes("pistacchio") || name.includes("pistache")) return "#86EFAC"; // Verde Pistache Cremoso
   if (name.includes("raspberry") || name.includes("framboesa") || name.includes("granate") || name.includes("romã")) return "#BE123C"; // Vermelho Rubi / Framboesa
@@ -216,12 +216,12 @@ export function getLiquidColor(product) {
     case "cachaca":
       return "#B45309"; // Âmbar Whisky / Cachaça
     case "rum":
-      return name.includes("white") ? "#E2E8F0" : "#92400E"; // Rum Branco (Prata) ou Rum Escuro (Âmbar)
+      return name.includes("white") ? "#0EA5E9" : "#92400E"; // Rum Branco (Aqua) ou Rum Escuro (Âmbar)
     case "gin":
     case "vodka":
     case "pisco":
     case "mezcal":
-      return "#E2E8F0"; // Prata / Cristalino (antes estava marrom escuro por engano!)
+      return "#0EA5E9"; // Cristalino Aqua Vibrante
     case "tequila":
       return "#D97706"; // Tequila Ouro
     case "bitter/aperitivo":

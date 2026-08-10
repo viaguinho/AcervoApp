@@ -1122,20 +1122,43 @@ export default function ProductDetail() {
                     
                     {/* Cápsula do líquido */}
                     <div style={{
-                      width: "12px",
+                      width: "14px",
                       height: "64px",
                       borderRadius: "12px",
-                      background: "rgba(0,0,0,0.04)",
-                      border: "1px solid rgba(0,0,0,0.05)",
-                      boxShadow: "inset 0 2px 4px rgba(0,0,0,0.1)",
-                      overflow: "hidden"
+                      background: "rgba(0, 0, 0, 0.08)",
+                      border: "1px solid rgba(0, 0, 0, 0.12)",
+                      boxShadow: "inset 0 2px 4px rgba(0, 0, 0, 0.15)",
+                      overflow: "hidden",
+                      position: "relative"
                     }}>
                       <svg 
                         viewBox="0 0 100 100" 
                         preserveAspectRatio="none" 
                         style={{ width: "100%", height: "100%", display: "block" }}
                       >
-                        <rect x="0" y={100 - fillH} width="100" height={fillH} fill={liquidColor || "#3F2B22"} />
+                        {/* Fundo de contraste interno */}
+                        <rect x="0" y="0" width="100" height="100" fill="rgba(0, 0, 0, 0.05)" />
+                        
+                        {/* Preenchimento do líquido */}
+                        <rect 
+                          x="0" 
+                          y={100 - fillH} 
+                          width="100" 
+                          height={fillH} 
+                          fill={liquidColor || "#B45309"} 
+                        />
+                        
+                        {/* Menisco / Linha de Superfície do Líquido */}
+                        {fillH > 0 && fillH < 100 && (
+                          <line 
+                            x1="0" 
+                            y1={100 - fillH} 
+                            x2="100" 
+                            y2={100 - fillH} 
+                            stroke="rgba(0, 0, 0, 0.4)" 
+                            strokeWidth="4" 
+                          />
+                        )}
                       </svg>
                     </div>
 
