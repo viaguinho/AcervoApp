@@ -1132,7 +1132,7 @@ export default function ProductDetail() {
                       overflow: "hidden"
                     }}>
                       <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" style={{ position: "absolute", bottom: 0, left: 0 }}>
-                        <rect x="0" y={`${100 - fillH}%`} width="100%" height={`${fillH}%`} fill={liquidColor || "#3F2B22"} />
+                        <rect x="0" y={100 - fillH} width="100" height={fillH} fill={liquidColor || "#3F2B22"} />
                       </svg>
                     </div>
 
