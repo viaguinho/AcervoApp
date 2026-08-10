@@ -209,6 +209,7 @@ export function getLiquidColor(product) {
   const category = product.category?.toLowerCase() || "";
 
   // 2. Palavras-chave no nome do produto (Cafe, XO, Gold, etc)
+  if (name.includes("hennessy") || name.includes("cognac") || name.includes("conhaque") || category.includes("cognac") || category.includes("conhaque")) return "#C25E00"; // Âmbar Conhaque Hennessy
   if (name.includes("cafe") || name.includes("coffee") || name.includes("xo") || name.includes("black")) return "#3F2B22"; // Marrom Café Escuro / Preto
   if (name.includes("aperol") || name.includes("campari") || name.includes("red") || name.includes("vermelho")) return "#EF4444"; // Vermelho Vibrante
   if (name.includes("goldwasser")) return "#FDE047"; // Dourado Suave (folhas de ouro)

@@ -13,7 +13,7 @@ import { Share2, MessageCircle, Mail, Link2, ShoppingBag } from "lucide-react";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Lens } from "@/components/ui/lens";
 import { GlassButton } from "@/components/ui/apple-tahoe-liquid-glass-button";
-import LiquidPill from "@/components/LiquidPill";
+import OpenedBottleBadge from "@/components/OpenedBottleBadge";
 import { AuroraBackground } from "@/components/ui/aurora-background";
 import GlassSurface from "@/components/ui/GlassSurface";
 import { GooeyText } from "@/components/ui/gooey-text-morphing";
@@ -1143,16 +1143,10 @@ export default function ProductDetail() {
                     as="div"
                     size="none"
                     glassColor="rgba(255, 255, 255, 0.6)"
-                    className="!p-[10px_14px] flex items-center gap-[14px] rounded-[20px] transition-all duration-300"
+                    className="!p-[12px_16px] flex items-center justify-center rounded-[20px] transition-all duration-300"
                   >
-                    
-                    {/* Cápsula do líquido (Pílula Vertical) */}
-                    <LiquidPill product={product} level={pct} width={14} height={64} />
-
-
-
                     {/* Dados textuais Brutalistas/Editoriais */}
-                    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
                       <div style={{ display: "flex", alignItems: "baseline", gap: "2px" }}>
                         <span style={{ fontSize: "28px", fontWeight: "300", letterSpacing: "-0.04em", color: "#111827", lineHeight: 1 }}>
                           {pct}
@@ -1162,7 +1156,7 @@ export default function ProductDetail() {
                       
                       <div style={{ width: "100%", height: "1px", background: "rgba(0,0,0,0.06)", margin: "4px 0" }} />
                       
-                      <div style={{ display: "flex", flexDirection: "column", gap: "1px" }}>
+                      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1px" }}>
                         <span style={{ fontSize: "10px", fontWeight: "600", color: "#6B7280", letterSpacing: "0.06em", textTransform: "uppercase" }}>
                           <span style={{ color: "#111827" }}>{volCurrent}</span><span style={{ fontSize: "8px" }}>ml</span> rest.
                         </span>
@@ -1171,7 +1165,6 @@ export default function ProductDetail() {
                         </span>
                       </div>
                     </div>
-
                   </GlassButton>
                 </div>);
 
@@ -1316,6 +1309,11 @@ export default function ProductDetail() {
                 </p>
               </div>
             )}
+
+            {/* Card de Porcentagem de Líquido na Sessão de Descritivos */}
+            <div className="w-full mt-2">
+              <OpenedBottleBadge product={product} size="lg" />
+            </div>
 
             {/* Perfil Sensorial */}
             {product.sensory_profile?.length > 0 && (

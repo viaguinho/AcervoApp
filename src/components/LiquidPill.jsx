@@ -15,17 +15,18 @@ import { getLiquidColor, getSafeHexColor } from "@/lib/openedBottle";
 export default function LiquidPill({ product, level, width = 14, height = 54, className = "" }) {
   if (!product) return null;
 
-  const isOpened = product.is_opened && product.opening_level != null;
-  const pct = level != null ? level : (isOpened ? Math.max(0, Math.min(100, product.opening_level)) : 100);
+  const rawLevel = level != null ? level : (product.opening_level != null ? product.opening_level : (product.is_opened ? 80 : 100));
+  const numericLevel = Number(rawLevel);
+  const pct = isNaN(numericLevel) ? 100 : Math.max(0, Math.min(100, numericLevel));
   const rawColor = getLiquidColor(product);
   const liquidColor = getSafeHexColor(rawColor);
-  const fillH = Math.max(0, Math.min(100, pct));
+  const fillH = pct;
   const borderRadius = Math.round(width * 0.7);
   const innerRadius = Math.round(width * 0.55);
 
   return (
     <div
-      className={`relative overflow-hidden flex flex-col justify-end shrink-0 ${className}`}
+      className={`relative overflow-hidden shrink-0 ${className}`}
       style={{
         width: `${width}px`,
         height: `${height}px`,
@@ -36,18 +37,22 @@ export default function LiquidPill({ product, level, width = 14, height = 54, cl
       }}
     >
       {/* Fundo de contraste interno */}
-      <div style={{ position: "absolute", inset: 0, background: "rgba(0, 0, 0, 0.04)" }} />
+      <div style={{ position: "absolute", inset: 0, background: "rgba(0, 0, 0, 0.05)", zIndex: 0 }} />
 
-      {/* Preenchimento do líquido em HTML/CSS puro com gradiente e sombra de brilho */}
+      {/* Preenchimento do líquido ancorado na base */}
       <div
         style={{
-          width: "100%",
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
           height: `${fillH}%`,
-          background: `linear-gradient(180deg, ${liquidColor} 0%, ${liquidColor}DD 100%)`,
+          minHeight: fillH > 0 ? "4px" : "0px",
+          background: `linear-gradient(180deg, ${liquidColor} 0%, ${liquidColor}EE 100%)`,
           borderRadius: fillH >= 95 ? `${innerRadius}px` : `0 0 ${innerRadius}px ${innerRadius}px`,
           transition: "height 0.5s ease-out",
-          position: "relative",
-          boxShadow: `0 0 8px ${liquidColor}66`,
+          zIndex: 10,
+          boxShadow: `0 0 10px ${liquidColor}AA`,
         }}
       >
         {/* Menisco / Linha de Superfície do Líquido */}
@@ -59,8 +64,9 @@ export default function LiquidPill({ product, level, width = 14, height = 54, cl
               left: 0,
               right: 0,
               height: "2px",
-              background: "rgba(255, 255, 255, 0.85)",
-              boxShadow: "0 0 4px rgba(255, 255, 255, 0.95)",
+              background: "rgba(255, 255, 255, 0.95)",
+              boxShadow: "0 0 4px rgba(255, 255, 255, 1)",
+              zIndex: 11,
             }}
           />
         )}
@@ -73,10 +79,11 @@ export default function LiquidPill({ product, level, width = 14, height = 54, cl
           top: "2px",
           left: "2px",
           bottom: "2px",
-          width: Math.max(2, Math.round(width * 0.2)) + "px",
-          background: "linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.08) 100%)",
+          width: Math.max(2, Math.round(width * 0.25)) + "px",
+          background: "linear-gradient(180deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.1) 100%)",
           borderRadius: "4px",
           pointerEvents: "none",
+          zIndex: 20,
         }}
       />
     </div>
