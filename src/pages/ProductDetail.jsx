@@ -1133,13 +1133,13 @@ export default function ProductDetail() {
                     }}>
                       <div style={{
                         position: "absolute",
+                        top: `${100 - fillH}%`,
                         bottom: 0,
                         left: 0,
-                        width: "100%",
-                        height: `${fillH}%`,
-                        background: liquidColor,
+                        right: 0,
+                        backgroundColor: liquidColor,
                         boxShadow: `0 0 8px ${liquidColor}`,
-                        transition: "height 0.5s ease-out"
+                        transition: "top 0.5s ease-out"
                       }} />
                     </div>
 
