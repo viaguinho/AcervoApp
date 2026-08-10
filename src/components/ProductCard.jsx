@@ -108,7 +108,7 @@ export default function ProductCard({ product, index, variant = "solid", hideSta
             perspective: 1000
           }}>
 
-          <Link to={productUrl} className="w-full h-full flex items-center justify-end flex-col pb-2 z-10">
+          <Link to={productUrl} className="w-full h-full flex items-center justify-end flex-col pb-2 relative z-0">
             {product.image_url ?
               <motion.div 
                 className="flex-grow w-full flex flex-col justify-end items-center"

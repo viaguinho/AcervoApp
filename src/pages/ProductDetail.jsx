@@ -1137,8 +1137,7 @@ export default function ProductDetail() {
                         left: 0,
                         width: "100%",
                         height: `${fillH}%`,
-                        backgroundImage: `linear-gradient(90deg, rgba(255,255,255,0.2) 0%, transparent 40%, rgba(0,0,0,0.1) 100%)`,
-                        backgroundColor: liquidColor,
+                        background: liquidColor,
                         boxShadow: `0 0 8px ${liquidColor}`,
                         transition: "height 0.5s ease-out"
                       }} />
