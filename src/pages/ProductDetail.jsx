@@ -1111,64 +1111,7 @@ export default function ProductDetail() {
               </AnimatePresence>
             </div>
 
-            {/* Liquid Gauge — Novo Mostrador Geométrico Premium */}
-            {(() => {
-              const volTotal = parseVolumeMl(product.volume);
-              const isOpened = product.is_opened && product.opening_level != null;
-              const pct = isOpened ? Math.max(0, Math.min(100, product.opening_level)) : 100;
-              const volCurrent = isOpened ? getCurrentVolumeMl(product) : volTotal;
-              const fillH = pct; // Height of liquid
-              return (
-                <div
-                  ref={dropDrag.ref}
-                  onMouseDown={dropDrag.onPointerDown}
-                  onTouchStart={dropDrag.onPointerDown}
-                  aria-label={`Volume: ${pct}% da garrafa — ${volCurrent}ml restantes de ${volTotal}ml`}
-                  style={{
-                    position: "absolute",
-                    left: `${dropDrag.pos.x}%`,
-                    top: `${dropDrag.pos.y}%`,
-                    transform: "translate(-50%, 0) translateZ(0)",
-                    zIndex: 1,
-                    cursor: isAdmin ? "grab" : "default",
-                    touchAction: isAdmin ? "none" : "auto",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    gap: "8px",
-                  }}
-                  title={isAdmin ? "Arraste para reposicionar o mostrador" : undefined}
-                >
-                  <GlassButton
-                    as="div"
-                    size="none"
-                    glassColor="rgba(255, 255, 255, 0.6)"
-                    className="!p-[12px_16px] flex items-center justify-center rounded-[20px] transition-all duration-300"
-                  >
-                    {/* Dados textuais Brutalistas/Editoriais */}
-                    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-                      <div style={{ display: "flex", alignItems: "baseline", gap: "2px" }}>
-                        <span style={{ fontSize: "28px", fontWeight: "300", letterSpacing: "-0.04em", color: "#111827", lineHeight: 1 }}>
-                          {pct}
-                        </span>
-                        <span style={{ fontSize: "14px", fontWeight: "600", color: liquidColor }}>%</span>
-                      </div>
-                      
-                      <div style={{ width: "100%", height: "1px", background: "rgba(0,0,0,0.06)", margin: "4px 0" }} />
-                      
-                      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1px" }}>
-                        <span style={{ fontSize: "10px", fontWeight: "600", color: "#6B7280", letterSpacing: "0.06em", textTransform: "uppercase" }}>
-                          <span style={{ color: "#111827" }}>{volCurrent}</span><span style={{ fontSize: "8px" }}>ml</span> rest.
-                        </span>
-                        <span style={{ fontSize: "9px", fontWeight: "500", color: "#9CA3AF", letterSpacing: "0.04em" }}>
-                          de {volTotal}ml total
-                        </span>
-                      </div>
-                    </div>
-                  </GlassButton>
-                </div>);
 
-            })()}
 
 
             {/* NavIndicator — Estética Apple Tahoe Glass com linhas finas */}
