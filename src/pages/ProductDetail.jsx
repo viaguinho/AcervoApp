@@ -1125,10 +1125,21 @@ export default function ProductDetail() {
                       width: "12px",
                       height: "64px",
                       borderRadius: "12px",
-                      background: `linear-gradient(to top, ${liquidColor} ${fillH}%, rgba(0,0,0,0.04) ${fillH}%)`,
+                      background: "rgba(0,0,0,0.04)",
                       border: "1px solid rgba(0,0,0,0.05)",
-                      boxShadow: "inset 0 2px 4px rgba(0,0,0,0.1)"
-                    }} />
+                      boxShadow: "inset 0 2px 4px rgba(0,0,0,0.1)",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "flex-end",
+                      overflow: "hidden"
+                    }}>
+                      <div style={{
+                        width: "100%",
+                        height: `${fillH}%`,
+                        minHeight: `${fillH}%`,
+                        backgroundColor: liquidColor
+                      }} />
+                    </div>
 
                     {/* Dados textuais Brutalistas/Editoriais */}
                     <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
