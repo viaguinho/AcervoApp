@@ -16,7 +16,7 @@ export default function OpenedBottleBadge({ product, size = "sm" }) {
 
   if (size === "sm") {
     return (
-      <div className="absolute z-40 top-2.5 left-2.5 glass-strong rounded-full pl-1.5 pr-2.5 py-1 flex items-center gap-2 border border-white/40 shadow-sm">
+      <div className="absolute z-40 top-2.5 left-2.5 glass-strong rounded-full pl-1.5 pr-2.5 py-1 flex items-center gap-2 border border-white/40 shadow-sm" style={{ zIndex: 50 }}>
         <MiniBottleGauge product={product} size="xs" />
         <div className="flex flex-col font-outfit leading-none">
           <span className="text-[8px] font-bold tracking-[0.1em] uppercase text-foreground/80">

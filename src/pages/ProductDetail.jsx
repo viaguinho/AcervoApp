@@ -1138,8 +1138,8 @@ export default function ProductDetail() {
                         width: "100%",
                         height: `${fillH}%`,
                         backgroundImage: `linear-gradient(90deg, rgba(255,255,255,0.2) 0%, transparent 40%, rgba(0,0,0,0.1) 100%)`,
-                        backgroundColor: `var(--liquid-color)`,
-                        boxShadow: `0 0 8px var(--liquid-color)`,
+                        backgroundColor: liquidColor,
+                        boxShadow: `0 0 8px ${liquidColor}`,
                         transition: "height 0.5s ease-out"
                       }} />
                     </div>
@@ -1150,7 +1150,7 @@ export default function ProductDetail() {
                         <span style={{ fontSize: "28px", fontWeight: "300", letterSpacing: "-0.04em", color: "#111827", lineHeight: 1 }}>
                           {pct}
                         </span>
-                        <span style={{ fontSize: "14px", fontWeight: "600", color: "var(--liquid-color)" }}>%</span>
+                        <span style={{ fontSize: "14px", fontWeight: "600", color: liquidColor }}>%</span>
                       </div>
                       
                       <div style={{ width: "100%", height: "1px", background: "rgba(0,0,0,0.06)", margin: "4px 0" }} />
