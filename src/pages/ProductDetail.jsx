@@ -812,19 +812,44 @@ export default function ProductDetail() {
         "--accent-color": accentColor
       })}
     >
-      <AuroraBackground
-        showRadialGradient={true}
-        colors={{
-          color1: `${liquidColor}66`,
-          color2: `${liquidColor}44`,
-          color3: `${liquidColor}55`,
-          color4: `${liquidColor}33`,
-          color5: `${liquidColor}44`,
-        }}
-        className="absolute top-[-150px] left-0 w-full h-[750px] overflow-hidden z-0 rounded-none border-none transition-bg"
+      {/* Ambient Aura Liquid Glow — Transição fluida e contínua sem cortes ou blocos retangulares */}
+      <div 
+        className="absolute inset-0 pointer-events-none z-0 overflow-hidden"
+        style={{ minHeight: "100%" }}
       >
-        <div />
-      </AuroraBackground>
+        {/* Aura Radial Superior Centralizada na Garrafa */}
+        <div
+          style={{
+            position: "absolute",
+            top: "-80px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: "140%",
+            maxWidth: "900px",
+            height: "750px",
+            background: `radial-gradient(ellipse at 50% 35%, ${liquidColor}35 0%, ${liquidColor}15 45%, transparent 75%)`,
+            transition: "background 0.8s cubic-bezier(0.16, 1, 0.3, 1)",
+            filter: "blur(40px)",
+          }}
+        />
+
+        {/* Aura Secundária Inferior Suave */}
+        <div
+          style={{
+            position: "absolute",
+            top: "450px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: "160%",
+            maxWidth: "1100px",
+            height: "850px",
+            background: `radial-gradient(ellipse at 50% 50%, ${liquidColor}20 0%, ${liquidColor}08 55%, transparent 80%)`,
+            transition: "background 0.8s cubic-bezier(0.16, 1, 0.3, 1)",
+            filter: "blur(60px)",
+          }}
+        />
+      </div>
+
       
       <div className="relative z-10 w-full overflow-visible">
       {/* ── HERO ── */}
