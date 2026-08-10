@@ -1086,10 +1086,11 @@ export default function ProductDetail() {
             </div>
 
             {/* Liquid Gauge — Novo Mostrador Geométrico Premium */}
-            {product.is_opened && (() => {
+            {(() => {
               const volTotal = parseVolumeMl(product.volume);
-              const volCurrent = getCurrentVolumeMl(product);
-              const pct = Math.max(0, Math.min(100, product.opening_level ?? 100));
+              const isOpened = product.is_opened && product.opening_level != null;
+              const pct = isOpened ? Math.max(0, Math.min(100, product.opening_level)) : 100;
+              const volCurrent = isOpened ? getCurrentVolumeMl(product) : volTotal;
               const fillH = pct; // Height of liquid
               return (
                 <div
@@ -1136,8 +1137,9 @@ export default function ProductDetail() {
                         left: 0,
                         width: "100%",
                         height: `${fillH}%`,
-                        background: `linear-gradient(90deg, rgba(255,255,255,0.2) 0%, transparent 40%, rgba(0,0,0,0.1) 100%), linear-gradient(180deg, var(--liquid-color) 0%, var(--liquid-color)CC 100%)`,
-                        boxShadow: `0 0 8px var(--liquid-color)66`,
+                        backgroundImage: `linear-gradient(90deg, rgba(255,255,255,0.2) 0%, transparent 40%, rgba(0,0,0,0.1) 100%)`,
+                        backgroundColor: `var(--liquid-color)`,
+                        boxShadow: `0 0 8px var(--liquid-color)`,
                         transition: "height 0.5s ease-out"
                       }} />
                     </div>
