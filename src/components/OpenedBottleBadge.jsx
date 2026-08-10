@@ -1,5 +1,5 @@
 import { calcularPrecoFromProduct, getCurrentVolumeMl, parseVolumeMl, getLiquidColor } from "@/lib/openedBottle";
-import MiniBottleGauge from "./MiniBottleGauge";
+import LiquidPill from "./LiquidPill";
 
 /**
  * Componente OpenedBottleBadge
@@ -16,10 +16,10 @@ export default function OpenedBottleBadge({ product, size = "sm" }) {
 
   if (size === "sm") {
     return (
-      <div className="absolute z-40 top-2.5 left-2.5 glass-strong rounded-full pl-1.5 pr-2.5 py-1 flex items-center gap-2 border border-white/40 shadow-sm" style={{ zIndex: 50 }}>
-        <MiniBottleGauge product={product} size="xs" />
+      <div className="absolute z-40 top-2.5 left-2.5 glass-strong rounded-full pl-2 pr-3 py-1.5 flex items-center gap-2 border border-white/40 shadow-sm" style={{ zIndex: 50 }}>
+        <LiquidPill product={product} width={10} height={30} />
         <div className="flex flex-col font-outfit leading-none">
-          <span className="text-[8px] font-bold tracking-[0.1em] uppercase text-foreground/80">
+          <span className="text-[9px] font-bold tracking-[0.08em] uppercase text-foreground/90">
             {level}% rest.
           </span>
           {pricing.discountPercent > 0 && (
@@ -44,7 +44,8 @@ export default function OpenedBottleBadge({ product, size = "sm" }) {
     >
       <div className="flex items-center justify-between gap-4 mb-4">
         <div className="flex items-center gap-3">
-          <MiniBottleGauge product={product} size="md" />
+          <LiquidPill product={product} width={14} height={44} />
+
           <div className="flex flex-col">
             <span className="text-[9px] font-bold tracking-[0.15em] uppercase text-muted-foreground/60 leading-none mb-1">
               Fração de Líquido

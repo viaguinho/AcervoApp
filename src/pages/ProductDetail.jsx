@@ -13,6 +13,7 @@ import { Share2, MessageCircle, Mail, Link2, ShoppingBag } from "lucide-react";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Lens } from "@/components/ui/lens";
 import { GlassButton } from "@/components/ui/apple-tahoe-liquid-glass-button";
+import LiquidPill from "@/components/LiquidPill";
 import { AuroraBackground } from "@/components/ui/aurora-background";
 import GlassSurface from "@/components/ui/GlassSurface";
 import { GooeyText } from "@/components/ui/gooey-text-morphing";
@@ -1121,59 +1122,8 @@ export default function ProductDetail() {
                   >
                     
                     {/* Cápsula do líquido (Pílula Vertical) */}
-                    <div style={{
-                      width: "14px",
-                      height: "64px",
-                      borderRadius: "12px",
-                      background: "rgba(0, 0, 0, 0.08)",
-                      border: "1px solid rgba(0, 0, 0, 0.12)",
-                      boxShadow: "inset 0 2px 4px rgba(0, 0, 0, 0.15)",
-                      overflow: "hidden",
-                      position: "relative",
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "flex-end",
-                      flexShrink: 0
-                    }}>
-                      {/* Fundo de contraste interno */}
-                      <div style={{ position: "absolute", inset: 0, background: "rgba(0, 0, 0, 0.04)" }} />
-                      
-                      {/* Preenchimento do líquido em HTML/CSS puro de alta fidelidade */}
-                      <div style={{
-                        width: "100%",
-                        height: `${fillH}%`,
-                        background: liquidColor || "#B45309",
-                        borderRadius: fillH >= 95 ? "10px" : "0 0 10px 10px",
-                        transition: "height 0.5s ease-out",
-                        position: "relative",
-                        boxShadow: `0 0 8px ${liquidColor ? liquidColor + "66" : "rgba(180, 83, 9, 0.4)"}`
-                      }}>
-                        {/* Menisco / Linha de Superfície do Líquido */}
-                        {fillH > 0 && fillH < 100 && (
-                          <div style={{
-                            position: "absolute",
-                            top: 0,
-                            left: 0,
-                            right: 0,
-                            height: "2px",
-                            background: "rgba(255, 255, 255, 0.8)",
-                            boxShadow: "0 0 3px rgba(255, 255, 255, 0.9)"
-                          }} />
-                        )}
-                      </div>
+                    <LiquidPill product={product} level={pct} width={14} height={64} />
 
-                      {/* Reflexo Glossy/Vidro Tridimensional na frente da cápsula */}
-                      <div style={{
-                        position: "absolute",
-                        top: "2px",
-                        left: "2px",
-                        bottom: "2px",
-                        width: "3px",
-                        background: "linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.05) 100%)",
-                        borderRadius: "4px",
-                        pointerEvents: "none"
-                      }} />
-                    </div>
 
 
                     {/* Dados textuais Brutalistas/Editoriais */}
