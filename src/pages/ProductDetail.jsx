@@ -713,10 +713,10 @@ export default function ProductDetail() {
   const handleShare = () => {
     // A funcionalidade agora é gerenciada pelo FloatingActionMenu
   };
-
+  const shareUrl = `${window.location.origin}/?product=${product?.id}`;
   const shareLinks = {
-    whatsapp: `https://api.whatsapp.com/send?text=${encodeURIComponent(`Confira ${product?.name} no Personal Bar App! ` + window.location.href)}`,
-    email: `mailto:?subject=${encodeURIComponent(`Confira ${product?.name}`)}&body=${encodeURIComponent(`Veja este rótulo exclusivo no Personal Bar: ` + window.location.href)}`,
+    whatsapp: `https://api.whatsapp.com/send?text=${encodeURIComponent(`Confira ${product?.name} no Personal Bar App! ` + shareUrl)}`,
+    email: `mailto:?subject=${encodeURIComponent(`Confira ${product?.name}`)}&body=${encodeURIComponent(`Veja este rótulo exclusivo no Personal Bar: ` + shareUrl)}`,
   };
 
   const pricing = product ? calcularPrecoFromProduct(product) : null;
@@ -897,7 +897,7 @@ export default function ProductDetail() {
               label: "Copiar Link",
               Icon: <Link2 className="w-4 h-4 text-[#111827]" />,
               onClick: () => {
-                navigator.clipboard.writeText(window.location.href);
+                navigator.clipboard.writeText(shareUrl);
                 toast.success("Link copiado!", { duration: 2000 });
               },
             },

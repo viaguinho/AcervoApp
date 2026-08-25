@@ -8,7 +8,7 @@ import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import Layout from './components/Layout';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 
 const Home = lazy(() => import('./pages/Home'));
 const Catalog = lazy(() => import('./pages/Catalog'));
@@ -19,8 +19,19 @@ const LandingPage = lazy(() => import('./pages/LandingPage'));
 
 const ScrollToTop = () => {
   const { pathname, search } = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    // Intercepta link de compartilhamento (ex: /?product=123) e redireciona
+    if (pathname === '/' && search.includes('product=')) {
+      const params = new URLSearchParams(search);
+      const productId = params.get('product');
+      if (productId) {
+        navigate(`/product/${productId}`, { replace: true });
+        return;
+      }
+    }
+
     // Reset global window scroll
     window.scrollTo(0, 0);
     
@@ -29,7 +40,7 @@ const ScrollToTop = () => {
     scrollContainers.forEach(container => {
       container.scrollTop = 0;
     });
-  }, [pathname, search]);
+  }, [pathname, search, navigate]);
 
   return null;
 };
