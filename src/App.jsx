@@ -3,17 +3,19 @@ import { Toaster } from "@/components/ui/sonner"
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import Layout from './components/Layout';
-import Home from './pages/Home';
-import Catalog from './pages/Catalog';
-import ProductDetail from './pages/ProductDetail';
-import Bag from './pages/Bag';
-import Admin from './pages/Admin';
-import LandingPage from './pages/LandingPage';
 import { Navigate, useLocation } from 'react-router-dom';
+
+const Home = lazy(() => import('./pages/Home'));
+const Catalog = lazy(() => import('./pages/Catalog'));
+const ProductDetail = lazy(() => import('./pages/ProductDetail'));
+const Bag = lazy(() => import('./pages/Bag'));
+const Admin = lazy(() => import('./pages/Admin'));
+const LandingPage = lazy(() => import('./pages/LandingPage'));
 
 const ScrollToTop = () => {
   const { pathname, search } = useLocation();
@@ -79,17 +81,23 @@ const AuthenticatedApp = () => {
 
   // Render the main app
   return (
-    <Routes>
-      <Route element={<RequireAgeVerification><Layout /></RequireAgeVerification>}>
-        <Route path="/" element={<Home />} />
-        <Route path="/catalog" element={<Catalog />} />
-        <Route path="/product/:id" element={<ProductDetail />} />
-        <Route path="/bag" element={<Bag />} />
-        <Route path="/admin" element={<RequireAdmin><Admin /></RequireAdmin>} />
-        <Route path="*" element={<PageNotFound />} />
-      </Route>
-      <Route path="/welcome" element={<LandingPage />} />
-    </Routes>
+    <Suspense fallback={
+      <div className="fixed inset-0 flex items-center justify-center">
+        <div className="w-8 h-8 border-4 border-slate-200 border-t-slate-800 rounded-full animate-spin"></div>
+      </div>
+    }>
+      <Routes>
+        <Route element={<RequireAgeVerification><Layout /></RequireAgeVerification>}>
+          <Route path="/" element={<Home />} />
+          <Route path="/catalog" element={<Catalog />} />
+          <Route path="/product/:id" element={<ProductDetail />} />
+          <Route path="/bag" element={<Bag />} />
+          <Route path="/admin" element={<RequireAdmin><Admin /></RequireAdmin>} />
+          <Route path="*" element={<PageNotFound />} />
+        </Route>
+        <Route path="/welcome" element={<LandingPage />} />
+      </Routes>
+    </Suspense>
   );
 };
 

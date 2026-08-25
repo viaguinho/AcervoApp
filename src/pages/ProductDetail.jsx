@@ -4,8 +4,7 @@ import { api } from "@/api/apiClient";
 import { motion, AnimatePresence } from "framer-motion";
 import { addToBag } from "@/lib/bagStore";
 import { toast } from "sonner";
-import { HolographicButton } from "../components/HolographicButton";
-import { calcularPrecoFromProduct, getCurrentVolumeMl, parseVolumeMl, getLiquidColor } from "@/lib/openedBottle";
+import { calcularPrecoFromProduct, getLiquidColor } from "@/lib/openedBottle";
 import catalogoLocal from "@/data/catalogo-acervo.json";
 import { useDraggableLayout, useDraggable } from "@/hooks/useDraggableLayout";
 import FloatingActionMenu from "@/components/ui/floating-action-menu";
@@ -14,8 +13,6 @@ import { StatusBadge } from "@/components/ui/status-badge";
 import { Lens } from "@/components/ui/lens";
 import { GlassButton } from "@/components/ui/apple-tahoe-liquid-glass-button";
 import OpenedBottleBadge from "@/components/OpenedBottleBadge";
-import { AuroraBackground } from "@/components/ui/aurora-background";
-import GlassSurface from "@/components/ui/GlassSurface";
 import { GooeyText } from "@/components/ui/gooey-text-morphing";
 
 const staggerContainer = {

@@ -1,8 +1,7 @@
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { updateBagQuantity, removeFromBag } from "@/lib/bagStore";
 import { motion } from "framer-motion";
-import { getFinalPrice, getCurrentVolumeMl } from "@/lib/openedBottle";
-import MiniBottleGauge from "./MiniBottleGauge";
+import { getFinalPrice } from "@/lib/openedBottle";
 import GlassSurface from "@/components/ui/GlassSurface";
 
 export default function BagItem({ item, onUpdate }) {

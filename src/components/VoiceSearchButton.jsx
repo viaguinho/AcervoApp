@@ -7,7 +7,7 @@ export default function VoiceSearchButton({ onTranscript, onListeningChange }) {
   const recognitionRef = useRef(null);
 
   const startListening = () => {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const SpeechRecognition = window.SpeechRecognition || window['webkitSpeechRecognition'];
     if (!SpeechRecognition) {
       toast.error("Reconhecimento de voz não suportado neste navegador");
       return;
