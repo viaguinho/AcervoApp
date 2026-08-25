@@ -4,11 +4,15 @@ import localCatalog from '@/data/catalogo-acervo.json';
 
 const { appId, token, functionsVersion, appBaseUrl } = appParams;
 
+const isProd = typeof window !== 'undefined' && 
+  window.location.hostname !== 'localhost' && 
+  window.location.hostname !== '127.0.0.1';
+
 const baseApi = createClient({
   appId,
   token,
   functionsVersion,
-  serverUrl: import.meta.env.PROD ? 'https://base44.app' : '',
+  serverUrl: isProd ? 'https://base44.app' : '',
   requiresAuth: false,
   appBaseUrl
 });
