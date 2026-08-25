@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { ArrowRight } from "lucide-react";
 
 export default function LandingPage() {
@@ -13,6 +13,8 @@ export default function LandingPage() {
   const [shakeAgeGate, setShakeAgeGate] = useState(false);
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from || { pathname: '/' };
   const dayRef = useRef(null);
   const monthRef = useRef(null);
   const yearRef = useRef(null);
@@ -185,7 +187,7 @@ export default function LandingPage() {
                 setOnboardingStep(2);
               } else {
                 localStorage.setItem('age_verified', 'true');
-                navigate('/');
+                navigate(from.pathname + from.search, { replace: true });
               }
             }}
           >

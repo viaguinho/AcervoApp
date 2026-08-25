@@ -50,7 +50,7 @@ const RequireAgeVerification = ({ children }) => {
   const location = useLocation();
 
   if (!verified && location.pathname !== '/welcome') {
-    return <Navigate to="/welcome" replace />;
+    return <Navigate to="/welcome" replace state={{ from: location }} />;
   }
 
   return children;

@@ -616,9 +616,11 @@ export default function ProductDetail() {
     }
 
     async function load() {
+      let isProductFound = false;
       // @ts-ignore
       const products = await api.entities.Product.filter({ id });
       if (products.length > 0) {
+        isProductFound = true;
         const prod = products[0];
         if (prod.category === "Cachaca") prod.category = "Cachaça";
         if (prod.name === "Goldwasser Danzig 22 Karat") prod.category = "Licor";
@@ -659,11 +661,17 @@ export default function ProductDetail() {
           return p;
         });
         setAllProductsState(validProducts);
-        const idx = validProducts.findIndex((p) => p.id === id);
-        if (idx !== -1) setCurrentIndex(idx);
+        const idx = validProducts.findIndex((p) => String(p.id) === String(id));
+        if (idx !== -1) {
+          setCurrentIndex(idx);
+          if (!isProductFound) setProduct(validProducts[idx]);
+        }
       } else {
-        const idx = allProductsState.findIndex((p) => p.id === id);
-        if (idx !== -1) setCurrentIndex(idx);
+        const idx = allProductsState.findIndex((p) => String(p.id) === String(id));
+        if (idx !== -1) {
+          setCurrentIndex(idx);
+          if (!isProductFound) setProduct(allProductsState[idx]);
+        }
       }
       
       setLoading(false);
