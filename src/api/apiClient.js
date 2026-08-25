@@ -8,7 +8,7 @@ const baseApi = createClient({
   appId,
   token,
   functionsVersion,
-  serverUrl: '',
+  serverUrl: import.meta.env.PROD ? 'https://base44.app' : '',
   requiresAuth: false,
   appBaseUrl
 });
