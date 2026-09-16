@@ -811,50 +811,12 @@ export default function ProductDetail() {
 
   return (
     <div 
-      className="min-h-screen overflow-y-auto overflow-x-hidden selection:bg-amber-100 font-inter relative rounded-none border-none bg-[#F8F9FA] transition-bg"
+      className="min-h-screen overflow-y-auto overflow-x-hidden selection:bg-amber-100 font-inter relative rounded-none border-none bg-white transition-bg"
       style={/** @type {any} */ ({
         "--liquid-color": liquidColor,
         "--accent-color": accentColor
       })}
     >
-      {/* Ambient Aura Liquid Glow — Transição fluida e contínua sem cortes ou blocos retangulares */}
-      <div 
-        className="absolute inset-0 pointer-events-none z-0 overflow-hidden"
-        style={{ minHeight: "100%" }}
-      >
-        {/* Aura Radial Superior Centralizada na Garrafa */}
-        <div
-          style={{
-            position: "absolute",
-            top: "-80px",
-            left: "50%",
-            transform: "translateX(-50%)",
-            width: "140%",
-            maxWidth: "900px",
-            height: "750px",
-            background: `radial-gradient(ellipse at 50% 35%, ${liquidColor}35 0%, ${liquidColor}15 45%, transparent 75%)`,
-            transition: "background 0.8s cubic-bezier(0.16, 1, 0.3, 1)",
-            filter: "blur(40px)",
-          }}
-        />
-
-        {/* Aura Secundária Inferior Suave */}
-        <div
-          style={{
-            position: "absolute",
-            top: "450px",
-            left: "50%",
-            transform: "translateX(-50%)",
-            width: "160%",
-            maxWidth: "1100px",
-            height: "850px",
-            background: `radial-gradient(ellipse at 50% 50%, ${liquidColor}20 0%, ${liquidColor}08 55%, transparent 80%)`,
-            transition: "background 0.8s cubic-bezier(0.16, 1, 0.3, 1)",
-            filter: "blur(60px)",
-          }}
-        />
-      </div>
-
       
       <div className="relative z-10 w-full overflow-visible">
       {/* ── HERO ── */}

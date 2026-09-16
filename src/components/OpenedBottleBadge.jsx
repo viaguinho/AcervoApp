@@ -103,7 +103,6 @@ export default function OpenedBottleBadge({ product, size = "sm" }) {
       ) : (
         <div className="flex items-center justify-between pt-3 border-t border-black/5 text-[10px] text-muted-foreground/70 font-outfit">
           <span className="font-semibold tracking-wider uppercase">Lacre de Fábrica</span>
-          <span className="font-medium text-emerald-600">Volume 100% Preservado</span>
         </div>
       )}
 

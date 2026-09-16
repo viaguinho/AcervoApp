@@ -29,18 +29,40 @@ const KNOWN_IDS = {
   "Hennessy Very Special": "6a0dc3499ad1b7ea7552d5c1",
 };
 
+// IDs e nomes de produtos vendidos a serem removidos/ocultados do acervo
+const SOLD_PRODUCT_IDS = new Set([
+  "69dda7abcb2b09770cbf8c92", // Bulldog London Dry Gin
+  "69dda7eacb2b09770cbf8cb8", // Amaretto dell'Orso
+  "69dda9cccb2b09770cbf8d83", // Absolut Citron
+]);
+
+const SOLD_PRODUCT_NAMES = [
+  "bulldog london dry gin",
+  "amaretto dell'orso",
+  "absolut citron"
+];
+
+const isSoldProduct = (product) => {
+  if (!product) return false;
+  if (product.id && SOLD_PRODUCT_IDS.has(product.id)) return true;
+  const name = (product.name || "").toLowerCase().trim();
+  return SOLD_PRODUCT_NAMES.some(soldName => name === soldName || name.includes(soldName));
+};
+
 const getLocalProducts = () => {
-  return localCatalog.map((item, index) => {
-    const knownId = KNOWN_IDS[item.name];
-    const slugId = item.name.toLowerCase().replace(/[^a-z0-9]/g, "-");
-    const id = knownId || `prod-${slugId || index}`;
-    return {
-      id,
-      created_date: new Date(Date.now() - index * 3600000).toISOString(),
-      updated_date: new Date().toISOString(),
-      ...item
-    };
-  });
+  return localCatalog
+    .filter(item => !isSoldProduct(item))
+    .map((item, index) => {
+      const knownId = KNOWN_IDS[item.name];
+      const slugId = item.name.toLowerCase().replace(/[^a-z0-9]/g, "-");
+      const id = knownId || `prod-${slugId || index}`;
+      return {
+        id,
+        created_date: new Date(Date.now() - index * 3600000).toISOString(),
+        updated_date: new Date().toISOString(),
+        ...item
+      };
+    });
 };
 
 const productEntityProxy = new Proxy(baseApi.entities?.Product || {}, {
@@ -51,7 +73,7 @@ const productEntityProxy = new Proxy(baseApi.entities?.Product || {}, {
           if (target[prop]) {
             const res = await target[prop](...args);
             if (Array.isArray(res) && res.length > 0) {
-              return res;
+              return res.filter(p => !isSoldProduct(p));
             }
           }
         } catch (err) {
@@ -62,10 +84,11 @@ const productEntityProxy = new Proxy(baseApi.entities?.Product || {}, {
     }
     if (prop === 'get') {
       return async (id, ...args) => {
+        if (SOLD_PRODUCT_IDS.has(id)) return null;
         try {
           if (typeof target[prop] === 'function') {
             const res = await target[prop](id, ...args);
-            if (res) return res;
+            if (res && !isSoldProduct(res)) return res;
           }
         } catch (err) {
           // fallback
