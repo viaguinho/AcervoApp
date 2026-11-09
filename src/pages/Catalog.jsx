@@ -153,7 +153,7 @@ export default function Catalog() {
           <button
             onClick={() => navigate("/")}
             aria-label="Voltar"
-            className="liquid-glass liquid-glass--interactive flex items-center justify-center focus:outline-none"
+            className="flex items-center justify-center hover:opacity-70 active:scale-95 transition-all focus:outline-none shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-[#0f1012]/10 bg-white"
             style={{
               width: 36,
               height: 36,
@@ -183,7 +183,7 @@ export default function Catalog() {
         
         {/* Search Bar — Apple Minimal Style */}
         <div className="relative group mb-8">
-          <div className="liquid-glass absolute inset-0 rounded-2xl pointer-events-none group-focus-within:[--lg-edge:rgb(0_113_227/0.7)] group-focus-within:[--lg-tint-a:0.6]" />
+          <div className="absolute inset-0 bg-[#fdfdfd] rounded-2xl border border-[#0f1012]/15 pointer-events-none transition-all duration-300 group-focus-within:border-[#0071e3]" style={{ borderWidth: '1.8px' }} />
           
           <div className="relative flex items-center px-4 py-2.5">
             {/* Lupa Minimalista */}
@@ -306,12 +306,16 @@ export default function Catalog() {
                         navigate("/catalog", { replace: true });
                       }
                     }}
-                    className={`liquid-glass liquid-glass--interactive ${isActive ? 'liquid-glass--blue' : 'liquid-glass--clear'} px-4 py-1.5 rounded-full text-[12px] whitespace-nowrap`}
+                    className={`px-4 py-1.5 rounded-full text-[12px] transition-all duration-300 whitespace-nowrap active-scale`}
                     style={{
+                      borderWidth: '1.8px',
+                      borderRadius: '9999px',
                       fontFamily: 'var(--font-inter)',
                       fontWeight: '350',
                       letterSpacing: '-0.2px',
-                      color: isActive ? '#0071e3' : '#5e5e5e'
+                      backgroundColor: isActive ? 'rgba(0, 113, 227, 0.1)' : 'transparent',
+                      color: isActive ? '#0071e3' : '#5e5e5e',
+                      borderColor: isActive ? '#0071e3' : 'rgba(15, 16, 18, 0.15)'
                     }}
                   >
                     {cat}

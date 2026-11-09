@@ -133,6 +133,10 @@ export default function ProductShowcase({ products }) {
                   aria-label={`Adicionar ${product.name} à sacola`}
                   size="none"
                   className="absolute bottom-[10px] right-[10px] w-8 h-8 rounded-full flex items-center justify-center shadow-lg z-10 !p-0"
+                  style={{
+                    background: "#121614",
+                    color: "white",
+                  }}
                   glassColor="rgba(0,0,0,0.5)"
                 >
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" style={{ width: 16, height: 16 }}>

@@ -626,16 +626,18 @@ div[style*="z-index:2147483647"] {
   font-size: 14px;
   font-weight: var(--font-weight-regular);
   color: var(--color-signal-blue);
+  background: none;
+  border: none;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 11px 20px;
-  border-radius: 9999px;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
 }
 
 .btn-ghost-link:hover {
-  translate: 3px 0;
+  opacity: 0.8;
+  transform: translateX(3px);
 }
 
 .screen-onboarding {

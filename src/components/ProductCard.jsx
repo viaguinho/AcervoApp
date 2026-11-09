@@ -155,7 +155,7 @@ export default function ProductCard({ product, index, variant = "solid", hideSta
           <button
             onClick={handleAddToBag}
             aria-label={`Adicionar ${product.name} à sacola`}
-            className="liquid-glass liquid-glass--interactive absolute top-3 right-3 h-8 w-8 rounded-full text-[#0f1012] flex items-center justify-center hover:scale-110 z-30"
+            className="absolute top-3 right-3 h-8 w-8 rounded-full border border-[#0f1012]/10 bg-white text-[#0f1012] flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-200 z-30 shadow-[0_2px_8px_rgba(0,0,0,0.04)] active-scale"
           >
             <PlusIcon />
           </button>

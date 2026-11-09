@@ -99,7 +99,7 @@ export default function ProductFilters({ filters, onFilterChange, customTrigger 
               </button>
             )}
             <DrawerClose asChild>
-              <button className="liquid-glass liquid-glass--interactive h-8 w-8 rounded-full flex items-center justify-center text-[#0f1012]">
+              <button className="h-8 w-8 rounded-full border border-[#0f1012]/10 bg-white flex items-center justify-center hover:bg-black/5 transition-colors active-scale text-[#0f1012]">
                 <X className="h-4 w-4" strokeWidth={1.8} />
               </button>
             </DrawerClose>
@@ -112,9 +112,12 @@ export default function ProductFilters({ filters, onFilterChange, customTrigger 
           <div className="flex flex-col gap-3">
             <button
               onClick={toggleSpecial}
-              className={`liquid-glass liquid-glass--interactive ${filters.special ? 'liquid-glass--blue' : ''} w-full flex items-center justify-between px-5 py-4`}
+              className="w-full flex items-center justify-between px-5 py-4 transition-all duration-300 active-scale"
               style={{
+                borderWidth: '1.8px',
                 borderRadius: '16px',
+                backgroundColor: filters.special ? 'rgba(0, 113, 227, 0.05)' : '#ffffff',
+                borderColor: filters.special ? '#0071e3' : 'rgba(15, 16, 18, 0.12)',
                 color: filters.special ? '#0071e3' : '#0f1012'
               }}
             >
@@ -129,9 +132,12 @@ export default function ProductFilters({ filters, onFilterChange, customTrigger 
 
             <button
               onClick={() => onFilterChange({ ...filters, closed: !filters.closed })}
-              className={`liquid-glass liquid-glass--interactive ${filters.closed ? 'liquid-glass--blue' : ''} w-full flex items-center justify-between px-5 py-4`}
+              className="w-full flex items-center justify-between px-5 py-4 transition-all duration-300 active-scale"
               style={{
+                borderWidth: '1.8px',
                 borderRadius: '16px',
+                backgroundColor: filters.closed ? 'rgba(0, 113, 227, 0.05)' : '#ffffff',
+                borderColor: filters.closed ? '#0071e3' : 'rgba(15, 16, 18, 0.12)',
                 color: filters.closed ? '#0071e3' : '#0f1012'
               }}
             >
@@ -160,12 +166,16 @@ export default function ProductFilters({ filters, onFilterChange, customTrigger 
                   <button
                     key={cat}
                     onClick={() => toggleFilter("categories", cat)}
-                    className={`liquid-glass liquid-glass--interactive ${isActive ? 'liquid-glass--blue' : 'liquid-glass--clear'} px-4 py-1.5 rounded-full text-[12px]`}
+                    className="px-4 py-1.5 rounded-full text-[12px] transition-all duration-300 active-scale"
                     style={{
+                      borderWidth: '1.8px',
+                      borderRadius: '9999px',
                       fontFamily: 'var(--font-inter)',
                       fontWeight: '350',
                       letterSpacing: '-0.2px',
-                      color: isActive ? '#0071e3' : '#5e5e5e'
+                      backgroundColor: isActive ? 'rgba(0, 113, 227, 0.1)' : 'transparent',
+                      color: isActive ? '#0071e3' : '#5e5e5e',
+                      borderColor: isActive ? '#0071e3' : 'rgba(15, 16, 18, 0.15)'
                     }}
                   >
                     {cat}
@@ -187,12 +197,16 @@ export default function ProductFilters({ filters, onFilterChange, customTrigger 
                   <button
                     key={profile}
                     onClick={() => toggleFilter("sensory", profile)}
-                    className={`liquid-glass liquid-glass--interactive ${isActive ? 'liquid-glass--blue' : 'liquid-glass--clear'} px-4 py-1.5 rounded-full text-[12px]`}
+                    className="px-4 py-1.5 rounded-full text-[12px] transition-all duration-300 active-scale"
                     style={{
+                      borderWidth: '1.8px',
+                      borderRadius: '9999px',
                       fontFamily: 'var(--font-inter)',
                       fontWeight: '350',
                       letterSpacing: '-0.2px',
-                      color: isActive ? '#0071e3' : '#5e5e5e'
+                      backgroundColor: isActive ? 'rgba(0, 113, 227, 0.1)' : 'transparent',
+                      color: isActive ? '#0071e3' : '#5e5e5e',
+                      borderColor: isActive ? '#0071e3' : 'rgba(15, 16, 18, 0.15)'
                     }}
                   >
                     {profile}
@@ -206,7 +220,7 @@ export default function ProductFilters({ filters, onFilterChange, customTrigger 
         <DrawerFooter className="px-6 py-4 border-t border-[#0f1012]/10 bg-[#fdfdfd]">
           <DrawerClose asChild>
             <button
-              className="liquid-glass liquid-glass--dark liquid-glass--interactive w-full py-3.5 text-[14px] font-semibold"
+              className="w-full bg-[#0f1012] text-white py-3.5 text-[14px] font-semibold transition-all active-scale"
               style={{
                 fontFamily: 'var(--font-inter)',
                 borderRadius: '26px', // radius-button
