@@ -1,8 +1,9 @@
-import { Outlet, Link, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Home, Search, ShoppingBag } from "lucide-react";
 import { useState, useEffect } from "react";
 import { getBagCount } from "@/lib/bagStore";
-import { motion } from "framer-motion";
+import { TabBar } from "glisse";
+import "glisse/styles.css";
 import { useAuth } from "@/lib/AuthContext";
 
 import { AuroraBackground } from "@/components/ui/aurora-background";
@@ -15,6 +16,7 @@ const navItems = [
 
 export default function Layout() {
   const location = useLocation();
+  const navigate = useNavigate();
   const [bagCount, setBagCount] = useState(0);
   const { user } = useAuth();
   const isAdmin = user?.role === "admin";
@@ -42,59 +44,25 @@ export default function Layout() {
           className="absolute bottom-0 w-full z-50 pointer-events-none flex justify-center"
           style={{ paddingBottom: "calc(1.5rem + env(safe-area-inset-bottom, 0px))" }}
         >
-          <div
-            className="liquid-glass w-[92%] h-[68px] flex items-center justify-around px-4 pointer-events-auto"
-            style={{
-              borderRadius: '54px' // radius-navpill
-            }}
-          >
-            {navItems.map(({ path, icon: Icon, label }) => {
-              const isActive = location.pathname === path;
-              return (
-                <Link
-                  key={path}
-                  to={path}
-                  translate="no"
-                  className="relative flex flex-col items-center gap-0.5 px-5 py-1.5 rounded-full transition-all duration-300 translate-no active-scale"
-                  style={{
-                    fontFamily: 'var(--font-inter)',
-                    letterSpacing: '-0.2px'
-                  }}
-                >
-                  {isActive && (
-                    <motion.div
-                      layoutId="nav-indicator"
-                      className="absolute inset-0 bg-[#0071e3]/10 rounded-full"
-                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                    />
+          <TabBar
+            className="w-[92%] pointer-events-auto"
+            value={location.pathname}
+            onValueChange={(v) => navigate(v)}
+            items={navItems.map(({ path, icon: Icon, label }) => ({
+              value: path,
+              label,
+              icon: (
+                <span className="relative inline-flex">
+                  <Icon className="h-5 w-5" strokeWidth={location.pathname === path ? 2 : 1.5} />
+                  {label === "Sacola" && bagCount > 0 && (
+                    <span className="absolute -top-1.5 -right-2.5 h-3.5 w-3.5 rounded-full bg-[#0071e3] text-white text-[9px] font-bold flex items-center justify-center">
+                      {bagCount}
+                    </span>
                   )}
-                  
-                  <div className="relative">
-                    <Icon
-                      className={`h-5 w-5 transition-colors duration-300 ${
-                        isActive ? "text-[#0071e3]" : "text-[#5e5e5e]"
-                      }`}
-                      strokeWidth={isActive ? 2 : 1.5}
-                    />
-                    
-                    {label === "Sacola" && bagCount > 0 && (
-                      <span className="absolute -top-1.5 -right-2.5 h-3.5 w-3.5 rounded-full bg-[#0071e3] text-white text-[9px] font-bold flex items-center justify-center">
-                        {bagCount}
-                      </span>
-                    )}
-                  </div>
-                  <span
-                    translate="no"
-                    className={`text-[10px] transition-colors duration-300 translate-no ${
-                      isActive ? "text-[#0071e3] font-semibold" : "text-[#5e5e5e]"
-                    }`}
-                  >
-                    {label}
-                  </span>
-                </Link>
-              );
-            })}
-          </div>
+                </span>
+              ),
+            }))}
+          />
         </nav>
       </div>
     </AuroraBackground>
