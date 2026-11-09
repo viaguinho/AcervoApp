@@ -849,8 +849,8 @@ export default function ProductDetail() {
         <FloatingActionMenu
           className="absolute top-[30px] right-[20px]"
           direction="vertical-left"
-          triggerClassName="w-11 h-11 bg-[rgba(255,255,255,0.20)] hover:bg-[rgba(255,255,255,0.40)] backdrop-blur-[10px] border-[0.5px] border-[rgba(0,0,0,0.06)] shadow-none text-foreground transition-all duration-300"
-          optionClassName="bg-[rgba(255,255,255,0.98)] hover:bg-white backdrop-blur-xl border border-black/10 shadow-[0_12px_24px_-4px_rgba(0,0,0,0.15)] text-foreground font-semibold transition-all duration-200 px-4 py-5"
+          triggerClassName="w-11 h-11 shadow-none text-foreground transition-all duration-300"
+          optionClassName="text-foreground font-semibold transition-all duration-200 px-4 py-5"
           TriggerIcon={<Share2 className="w-[18px] h-[18px] stroke-[1.5] translate-x-[1px]" />}
           options={[
             {
@@ -1118,7 +1118,7 @@ export default function ProductDetail() {
         {/* Botão de adicionar à sacola flutuante */}
         <button
           onClick={handleAdd}
-          className="absolute top-0 right-8 -translate-y-1/2 w-14 h-14 bg-black text-white rounded-full flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-all duration-150 z-30"
+          className="liquid-glass liquid-glass--dark liquid-glass--interactive absolute top-0 right-8 -translate-y-1/2 w-14 h-14 rounded-full flex items-center justify-center hover:scale-105 z-30"
           aria-label="Adicionar à sacola"
         >
           <ShoppingBag className="w-5 h-5" strokeWidth={1.8} />
@@ -1327,7 +1327,7 @@ export default function ProductDetail() {
       <div className="px-6 pb-8">
         <button
           onClick={handleAdd}
-          className="w-full py-4 bg-black text-white rounded-full font-semibold text-sm tracking-[0.15em] uppercase hover:opacity-90 active:scale-[0.98] transition-all duration-150 shadow-md flex items-center justify-center gap-2 font-outfit"
+          className="liquid-glass liquid-glass--dark liquid-glass--interactive w-full py-4 rounded-full font-semibold text-sm tracking-[0.15em] uppercase flex items-center justify-center gap-2 font-outfit"
           aria-label={`Solicitar reserva de ${product.name}`}
         >
           Reservar por R$ {finalPrice.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}

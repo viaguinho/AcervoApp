@@ -157,7 +157,7 @@ export default function Bag() {
           <GlassButton
             onClick={handleWhatsApp}
             size="none"
-            className="w-full flex items-center justify-center gap-3 rounded-2xl py-4 bg-foreground text-background text-sm font-light tracking-wide hover:opacity-90 transition-all active:scale-[0.98] !p-0 h-[56px]"
+            className="w-full flex items-center justify-center gap-3 rounded-2xl py-4 text-white text-sm font-light tracking-wide hover:opacity-90 transition-all active:scale-[0.98] !p-0 h-[56px]"
             glassColor="rgba(0,0,0,0.8)"
           >
             <MessageCircle className="h-4 w-4" strokeWidth={2} />
@@ -165,7 +165,7 @@ export default function Bag() {
           </GlassButton>
           <button
             onClick={() => { clearBag(); refresh(); }}
-            className="w-full text-center text-xs text-muted-foreground font-light tracking-wide hover:text-foreground transition-colors py-2"
+            className="liquid-glass liquid-glass--clear liquid-glass--interactive w-full text-center text-xs text-foreground/70 font-light tracking-wide hover:text-foreground rounded-full py-2.5"
           >
             Limpar sacola
           </button>

@@ -2,7 +2,6 @@ import { Minus, Plus, Trash2 } from "lucide-react";
 import { updateBagQuantity, removeFromBag } from "@/lib/bagStore";
 import { motion } from "framer-motion";
 import { getFinalPrice } from "@/lib/openedBottle";
-import GlassSurface from "@/components/ui/GlassSurface";
 
 export default function BagItem({ item, onUpdate }) {
   const handleQuantity = (delta) => {
@@ -51,17 +50,15 @@ export default function BagItem({ item, onUpdate }) {
       <div className="flex items-center gap-1.5">
         <button
           onClick={() => handleQuantity(-1)}
-          className="relative h-7 w-7 rounded-full flex items-center justify-center hover:bg-secondary/20 transition-all duration-300 active:scale-95"
+          className="liquid-glass liquid-glass--clear liquid-glass--interactive relative h-7 w-7 rounded-full flex items-center justify-center"
         >
-          <GlassSurface className="absolute inset-0 rounded-full" />
           <Minus className="h-3 w-3 relative z-10" strokeWidth={1.5} />
         </button>
         <span className="w-6 text-center text-sm font-light">{item.quantity || 1}</span>
         <button
           onClick={() => handleQuantity(1)}
-          className="relative h-7 w-7 rounded-full flex items-center justify-center hover:bg-secondary/20 transition-all duration-300 active:scale-95"
+          className="liquid-glass liquid-glass--clear liquid-glass--interactive relative h-7 w-7 rounded-full flex items-center justify-center"
         >
-          <GlassSurface className="absolute inset-0 rounded-full" />
           <Plus className="h-3 w-3 relative z-10" strokeWidth={1.5} />
         </button>
         <button

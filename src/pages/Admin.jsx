@@ -102,7 +102,7 @@ function ProductRow({ product, onEdit }) {
       </div>
       <button
         onClick={() => onEdit(product)}
-        className="text-xs text-muted-foreground hover:text-foreground transition-colors px-3 py-1.5 rounded-lg glass"
+        className="liquid-glass liquid-glass--interactive text-xs text-foreground/70 hover:text-foreground px-3 py-1.5 rounded-lg"
       >
         Editar
       </button>
@@ -180,9 +180,9 @@ function EditModal({ product, onSave, onClose, onDelete }) {
         className="relative bg-background rounded-t-2xl sm:rounded-2xl w-full max-w-lg shadow-2xl flex flex-col"
         style={{ maxHeight: "calc(100dvh - 80px)", height: "calc(100dvh - 80px)" }}
       >
-        <div className="sticky top-0 bg-background/95 backdrop-blur-sm z-10 px-5 pt-5 pb-3 flex items-center justify-between border-b border-border flex-shrink-0">
+        <div className="liquid-glass sticky top-0 z-10 px-5 pt-5 pb-3 flex items-center justify-between rounded-t-2xl flex-shrink-0">
           <h2 className="text-base font-medium">{isNew ? "Novo Produto" : "Editar Produto"}</h2>
-          <button onClick={onClose} className="h-8 w-8 rounded-full glass flex items-center justify-center">
+          <button onClick={onClose} className="liquid-glass liquid-glass--interactive liquid-glass--clear h-8 w-8 rounded-full flex items-center justify-center">
             <X className="h-4 w-4" strokeWidth={1.5} />
           </button>
         </div>
@@ -482,17 +482,12 @@ function EditModal({ product, onSave, onClose, onDelete }) {
 
         {/* Fixed action footer — pb-safe garante espaço acima do menu fixo no mobile */}
         <div
-          className="sticky bottom-0 z-10 flex gap-3 px-5 pt-3 pb-3 border-t border-border flex-shrink-0"
-          style={{
-            background: "rgba(255,255,255,0.95)",
-            backdropFilter: "blur(20px)",
-            WebkitBackdropFilter: "blur(20px)",
-          }}
+          className="liquid-glass sticky bottom-0 z-10 flex gap-3 px-5 pt-3 pb-3 flex-shrink-0"
         >
           {!isNew && (
             <button
               onClick={handleDelete}
-              className="h-11 w-11 flex items-center justify-center rounded-xl glass text-muted-foreground hover:text-destructive transition-colors flex-shrink-0"
+              className="liquid-glass liquid-glass--interactive liquid-glass--clear h-11 w-11 flex items-center justify-center rounded-xl text-muted-foreground hover:text-destructive flex-shrink-0"
             >
               <Trash2 className="h-4 w-4" strokeWidth={1.5} />
             </button>
@@ -500,7 +495,7 @@ function EditModal({ product, onSave, onClose, onDelete }) {
           <button
             onClick={handleSave}
             disabled={saving}
-            className="flex-1 flex items-center justify-center gap-2 bg-foreground text-background rounded-xl py-3 text-sm font-light tracking-wide hover:opacity-90 transition-all active:scale-[0.98] disabled:opacity-50"
+            className="liquid-glass liquid-glass--dark liquid-glass--interactive flex-1 flex items-center justify-center gap-2 rounded-xl py-3 text-sm font-light tracking-wide disabled:opacity-50"
           >
             {saving ? (
               <div className="w-4 h-4 border-2 border-background/30 border-t-background rounded-full animate-spin" />
@@ -641,7 +636,7 @@ export default function Admin() {
           </div>
           <button
             onClick={() => setShowNew(true)}
-            className="flex items-center gap-2 glass rounded-xl px-4 py-2.5 text-sm font-light hover:scale-[1.02] transition-transform active:scale-95"
+            className="liquid-glass liquid-glass--interactive flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-light"
           >
             <Plus className="h-4 w-4" strokeWidth={1.5} />
             Novo
@@ -664,7 +659,7 @@ export default function Admin() {
               <button
                 onClick={saveWhatsapp}
                 disabled={savingWhatsapp}
-                className="flex items-center gap-1.5 glass rounded-xl px-4 py-2.5 text-sm font-light hover:scale-[1.02] transition-transform active:scale-95 disabled:opacity-50"
+                className="liquid-glass liquid-glass--interactive flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-sm font-light disabled:opacity-50"
               >
                 {savingWhatsapp ? <div className="w-4 h-4 border-2 border-muted-foreground/30 border-t-foreground rounded-full animate-spin" /> : <Save className="h-4 w-4" strokeWidth={1.5} />}
                 Salvar
@@ -677,7 +672,7 @@ export default function Admin() {
             <button
               onClick={handleSync}
               disabled={syncing}
-              className="w-full flex items-center justify-center gap-2 glass rounded-xl py-3 text-sm font-light hover:scale-[1.01] transition-transform active:scale-98 disabled:opacity-50 text-foreground"
+              className="liquid-glass liquid-glass--interactive w-full flex items-center justify-center gap-2 rounded-xl py-3 text-sm font-light disabled:opacity-50 text-foreground"
             >
               {syncing ? (
                 <div className="w-4 h-4 border-2 border-muted-foreground/30 border-t-foreground rounded-full animate-spin" />

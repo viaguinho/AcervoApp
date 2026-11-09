@@ -32,8 +32,10 @@ export function HolographicButton({ children, onClick, icon = null, hideArrow = 
         .holographic-button {
           position: relative;
           overflow: hidden;
-          border: 1px solid rgba(0, 0, 0, 0.15);
-          background: linear-gradient(90deg, #18181b 0%, #3f3f46 25%, #71717a 50%, #3f3f46 75%, #18181b 100%);
+          border: 1px solid rgba(255, 255, 255, 0.28);
+          background: linear-gradient(90deg, rgba(24, 24, 27, 0.74) 0%, rgba(63, 63, 70, 0.58) 25%, rgba(113, 113, 122, 0.46) 50%, rgba(63, 63, 70, 0.58) 75%, rgba(24, 24, 27, 0.74) 100%);
+          -webkit-backdrop-filter: blur(18px) saturate(180%);
+          backdrop-filter: blur(18px) saturate(180%);
           background-size: 200% auto;
           cursor: pointer;
           outline: none !important;
@@ -44,7 +46,7 @@ export function HolographicButton({ children, onClick, icon = null, hideArrow = 
           transition: transform 150ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 150ms cubic-bezier(0.23, 1, 0.32, 1), border-color 150ms ease;
           z-index: 1;
           border-radius: 100px;
-          box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22), inset 0 1.5px 0 rgba(255, 255, 255, 0.4), inset 0 -1px 0 rgba(255, 255, 255, 0.08);
           animation: flow-mercury 8s linear infinite;
         }
         .dark .holographic-button {
@@ -52,7 +54,7 @@ export function HolographicButton({ children, onClick, icon = null, hideArrow = 
           box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.2);
         }
         .holographic-button:hover {
-          border-color: rgba(0, 0, 0, 0.3);
+          border-color: rgba(255, 255, 255, 0.5);
         }
         .dark .holographic-button:hover {
           border-color: rgba(255, 255, 255, 0.7);

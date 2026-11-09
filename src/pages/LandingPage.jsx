@@ -140,7 +140,7 @@ export default function LandingPage() {
             
             <div className="age-error">{ageGateError}</div>
             
-            <button type="submit" className="btn-ghost-link">
+            <button type="submit" className="btn-ghost-link liquid-glass liquid-glass--interactive">
               Acessar o Acervo
               <ArrowRight size={16} />
             </button>
@@ -181,7 +181,7 @@ export default function LandingPage() {
             <span className={`dot ${onboardingStep === 2 ? 'active' : ''}`} />
           </div>
           <button 
-            className="btn-ghost-link" 
+            className="btn-ghost-link liquid-glass liquid-glass--interactive"
             onClick={() => {
               if (onboardingStep === 1) {
                 setOnboardingStep(2);

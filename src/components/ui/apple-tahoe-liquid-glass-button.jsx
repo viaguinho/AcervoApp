@@ -22,6 +22,17 @@ const glassButtonVariants = cva(
 );
 
 /**
+ * Extrai a luminância de uma cor rgba()/rgb() para decidir entre vidro claro e escuro.
+ * @param {string | undefined} color
+ */
+function isDarkGlass(color) {
+  const m = color && color.match(/rgba?\(\s*([\d.]+)[\s,]+([\d.]+)[\s,]+([\d.]+)/);
+  if (!m) return false;
+  const [r, g, b] = [Number(m[1]), Number(m[2]), Number(m[3])];
+  return (0.299 * r + 0.587 * g + 0.114 * b) < 110;
+}
+
+/**
  * @type {React.ForwardRefExoticComponent<{
  *   className?: string;
  *   children?: React.ReactNode;
@@ -40,20 +51,17 @@ const GlassButton = React.forwardRef(
   ({ className, children, size, contentClassName, glassColor, as: Comp = "button", ...props }, ref) => {
     return (
       <Comp
-        className={cn(glassButtonVariants({ size }), "overflow-hidden active:scale-[0.98] transition-all duration-300", className)}
+        className={cn(glassButtonVariants({ size }), "overflow-hidden active:scale-[0.98] transition-all duration-300", isDarkGlass(glassColor) && "text-white", className)}
         ref={ref}
         {...props}
       >
-        {/* Fundo premium limpo sem distorção em SVG para evitar artefatos brancos */}
+        {/* Camada Liquid Glass (ver .liquid-glass em index.css) */}
         <div
-          className="absolute inset-0 -z-10 rounded-[inherit] transition-all duration-300"
-          style={{
-            backgroundColor: glassColor ? glassColor.replace(/[\d.]+\)$/g, '0.15)') : "rgba(255, 255, 255, 0.15)",
-            backdropFilter: "blur(20px) saturate(1.5)",
-            WebkitBackdropFilter: "blur(20px) saturate(1.5)",
-            border: "0.5px solid rgba(255, 255, 255, 0.3)",
-            boxShadow: "inset 0 1px 1px rgba(255, 255, 255, 0.4)",
-          }}
+          aria-hidden="true"
+          className={cn(
+            "liquid-glass absolute inset-0 -z-10 rounded-[inherit] pointer-events-none",
+            isDarkGlass(glassColor) && "liquid-glass--dark"
+          )}
         />
 
         {/* Conteúdo do Botão posicionado acima */}

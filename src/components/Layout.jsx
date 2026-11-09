@@ -43,10 +43,8 @@ export default function Layout() {
           style={{ paddingBottom: "calc(1.5rem + env(safe-area-inset-bottom, 0px))" }}
         >
           <div
-            className="w-[92%] h-[68px] shadow-[0_12px_36px_rgba(0,0,0,0.08)] bg-[#fdfdfd] border flex items-center justify-around px-4 pointer-events-auto"
+            className="liquid-glass w-[92%] h-[68px] flex items-center justify-around px-4 pointer-events-auto"
             style={{
-              borderWidth: '1.8px',
-              borderColor: 'rgba(15, 16, 18, 0.12)',
               borderRadius: '54px' // radius-navpill
             }}
           >
