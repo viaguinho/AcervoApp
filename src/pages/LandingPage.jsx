@@ -187,7 +187,7 @@ export default function LandingPage() {
                 setOnboardingStep(2);
               } else {
                 localStorage.setItem('age_verified', 'true');
-                navigate(from.pathname + from.search, { replace: true });
+                navigate(`${from.pathname || '/'}${from.search || ''}${from.hash || ''}`, { replace: true });
               }
             }}
           >
