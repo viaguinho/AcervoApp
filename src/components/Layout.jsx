@@ -45,7 +45,8 @@ export default function Layout() {
           style={{ paddingBottom: "calc(1.5rem + env(safe-area-inset-bottom, 0px))" }}
         >
           <TabBar
-            className="w-[92%] pointer-events-auto"
+            className="pointer-events-auto"
+            style={{ "--lg-tab-width": "min(112px, calc((100vw - 48px) / 3))" }}
             value={location.pathname}
             onValueChange={(v) => navigate(v)}
             items={navItems.map(({ path, icon: Icon, label }) => ({
